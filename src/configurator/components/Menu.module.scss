@@ -1,0 +1,16 @@
+.wrapper {
+  height: 100%;
+  background-color: #373636;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+
+  &.active,
+  &:hover {
+    background-color: red;
+    text-decoration: none;
+    color: #fff;
+  }
+}

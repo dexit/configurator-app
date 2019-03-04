@@ -11,7 +11,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route exact path="/" component={Configurator} />
+            <Route path="/" component={Configurator} />
           </Switch>
         </Router>
       </Provider>

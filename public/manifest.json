@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Konfigurator",
+  "name": "Przykładowy konfigurator",
   "icons": [
     {
       "src": "favicon.ico",
