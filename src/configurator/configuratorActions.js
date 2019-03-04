@@ -1,7 +1,11 @@
 import * as constants from '../store/constants';
 
-export const testAction = () => {
+export const setActiveItem = (activeCategorySlug, itemId) => {
   return {
-    type: constants.TEST_ACTION
+    type: constants.SET_ACTIVE_ITEM,
+    payload: {
+      activeCategorySlug,
+      itemId
+    }
   };
 };

@@ -5,29 +5,59 @@ import * as configuratorActions from '../configuratorActions';
 import styles from './MenuItems.module.scss';
 
 class MenuItems extends Component {
+  handleClick = (activeCategorySlug, itemId) => {
+    this.props.setActiveItem(activeCategorySlug, itemId);
+  };
+
   render() {
     const configStore = this.props.configuratorStore;
     const categories = configStore.categories;
+    const activeCategorySlug = this.props.match.params.category;
 
     const activeCategoryIndex = categories.findIndex(
-      category => category.slug === this.props.match.params.category
+      category => category.slug === activeCategorySlug
     );
+    const activeCategoryName = categories[activeCategoryIndex].name;
 
-    const itemsList = categories[activeCategoryIndex].items.map(item => (
-      <div
-        key={item.id}
-        className="col-md-6 p-4 d-flex justify-content-center align-content-center"
-      >
-        <button className={styles.item}>
-          <img src={item.imgThumb} alt="" className="img-fluid" />
-          {item.name}
-        </button>
-      </div>
-    ));
+    const itemsList =
+      activeCategoryIndex > -1 &&
+      categories[activeCategoryIndex].items.map(item => {
+        const activeItemsIndex = configStore.activeItems.findIndex(
+          item => item.categorySlug === activeCategorySlug
+        );
+        const activeItemId = configStore.activeItems[activeItemsIndex].itemId;
+        const activeItemClass = activeItemId === item.id && styles.active;
+
+        return (
+          <div
+            key={item.id}
+            className="col-md-6 p-4 d-flex justify-content-center align-content-center"
+          >
+            <button
+              className={`${styles.item} ${activeItemClass}`}
+              onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
+            >
+              <img src={item.imgThumb} alt="" className="img-fluid" />
+              {item.name}
+            </button>
+          </div>
+        );
+      });
 
     return (
       <div className={styles.wrapper}>
-        <div className="row">{itemsList}</div>
+        <div className="text-center py-4">
+          <h2>{activeCategoryName}</h2>
+        </div>
+        <div className="row">
+          {itemsList ? (
+            itemsList
+          ) : (
+            <div className="col text-center py-5">
+              <p>Wybierz kategorię</p>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -39,7 +69,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // testAction: eventId => dispatch(configuratorActions.testAction())
+    setActiveItem: (activeCategorySlug, itemId) =>
+      dispatch(configuratorActions.setActiveItem(activeCategorySlug, itemId))
   };
 };
 
