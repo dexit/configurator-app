@@ -10,22 +10,23 @@ class MenuItems extends Component {
   };
 
   render() {
-    const configStore = this.props.configuratorStore;
-    const categories = configStore.categories;
+    const configuratorStore = this.props.configuratorStore;
+    const categories = configuratorStore.categories;
     const activeCategorySlug = this.props.match.params.category;
-
     const activeCategoryIndex = categories.findIndex(
       category => category.slug === activeCategorySlug
     );
-    const activeCategoryName = categories[activeCategoryIndex].name;
+    const activeCategoryName =
+      activeCategoryIndex > -1 ? categories[activeCategoryIndex].name : null;
 
     const itemsList =
       activeCategoryIndex > -1 &&
       categories[activeCategoryIndex].items.map(item => {
-        const activeItemsIndex = configStore.activeItems.findIndex(
+        const activeItemsIndex = configuratorStore.activeItems.findIndex(
           item => item.categorySlug === activeCategorySlug
         );
-        const activeItemId = configStore.activeItems[activeItemsIndex].itemId;
+        const activeItemId =
+          configuratorStore.activeItems[activeItemsIndex].itemId;
         const activeItemClass = activeItemId === item.id && styles.active;
 
         return (
@@ -46,9 +47,11 @@ class MenuItems extends Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className="text-center py-4">
-          <h2>{activeCategoryName}</h2>
-        </div>
+        {activeCategoryName ? (
+          <div className="text-center py-4">
+            <h2>{activeCategoryName}</h2>
+          </div>
+        ) : null}
         <div className="row">
           {itemsList ? (
             itemsList
