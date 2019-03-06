@@ -6,28 +6,35 @@ import { withRouter } from 'react-router-dom';
 import styles from './ItemsList.module.scss';
 
 class ItemsList extends Component {
-  handleClick = (activeCategorySlug, itemId) => {
-    this.props.setActiveItem(activeCategorySlug, itemId);
+  handleClick = (activeCategoryParamsSlug, itemId) => {
+    this.props.setActiveItem(activeCategoryParamsSlug, itemId);
   };
 
-  list = () => {
+  componentDidMount() {
+    this.props.setInitialActiveItems();
+  }
+
+  list() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
-    const activeCategorySlug = this.props.match.params.category;
+    const activeCategoryParamsSlug = this.props.match.params.category;
     const activeCategoryIndex = categories.findIndex(
-      category => category.slug === activeCategorySlug
+      category => category.slug === activeCategoryParamsSlug
     );
 
     let list = [];
 
-    if (activeCategoryIndex > -1) {
+    if (activeCategoryIndex > -1 && configuratorStore.activeItems.length) {
       list = categories[activeCategoryIndex].items.map(item => {
-        const activeItemsIndex = configuratorStore.activeItems.findIndex(
-          item => item.categorySlug === activeCategorySlug
-        );
-        const activeItemId =
-          configuratorStore.activeItems[activeItemsIndex].itemId;
-        const activeItemClass = activeItemId === item.id && styles.active;
+        const activeItemClass = () => {
+          const activeItemsIndex = configuratorStore.activeItems.findIndex(
+            item => item.categorySlug === activeCategoryParamsSlug
+          );
+          const activeItemId =
+            configuratorStore.activeItems[activeItemsIndex].itemId;
+
+          return activeItemId === item.id ? styles.active : null;
+        };
 
         return (
           <div
@@ -35,8 +42,12 @@ class ItemsList extends Component {
             className="col-md-6 p-4 d-flex justify-content-center align-content-center"
           >
             <button
-              className={`${styles.item} ${activeItemClass}`}
-              onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
+              className={`${styles.item} ${activeItemClass()}`}
+              onClick={this.handleClick.bind(
+                this,
+                activeCategoryParamsSlug,
+                item.id
+              )}
             >
               <img src={item.imgThumb} alt="" className="img-fluid" />
               {item.name}
@@ -47,7 +58,7 @@ class ItemsList extends Component {
     }
 
     return list;
-  };
+  }
 
   render() {
     return <>{this.list()}</>;
@@ -60,8 +71,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveItem: (activeCategorySlug, itemId) =>
-      dispatch(configuratorActions.setActiveItem(activeCategorySlug, itemId))
+    setInitialActiveItems: () =>
+      dispatch(configuratorActions.setInitialActiveItems()),
+    setActiveItem: (activeCategoryParamsSlug, itemId) =>
+      dispatch(
+        configuratorActions.setActiveItem(activeCategoryParamsSlug, itemId)
+      )
   };
 };
 

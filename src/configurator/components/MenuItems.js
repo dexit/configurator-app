@@ -10,9 +10,9 @@ class MenuItems extends Component {
   render() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
-    const activeCategorySlug = this.props.match.params.category;
+    const activeCategoryParamsSlug = this.props.match.params.category;
     const activeCategoryIndex = categories.findIndex(
-      category => category.slug === activeCategorySlug
+      category => category.slug === activeCategoryParamsSlug
     );
     const activeCategoryName =
       activeCategoryIndex > -1 ? categories[activeCategoryIndex].name : null;
@@ -25,13 +25,13 @@ class MenuItems extends Component {
           </div>
         ) : null}
         <div className="row">
-          {activeCategoryIndex > -1 ? (
+          {/* {activeCategoryIndex > -1 ? (
             <ItemsList />
           ) : (
             <div className="col text-center py-5">
               <p>Wybierz kategorię</p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     );

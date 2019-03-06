@@ -66,24 +66,27 @@ const initialState = {
       ]
     }
   ],
-  activeItems: [
-    {
-      categorySlug: 'model',
-      itemId: 0
-    },
-    {
-      categorySlug: 'kolor-dodatkow',
-      itemId: 0
-    },
-    {
-      categorySlug: 'kolor-rekawkow',
-      itemId: 0
-    }
-  ]
+  activeItems: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case constants.SET_DEFAULT_ACTIVE_ITEMS:
+      console.log('SET_DEFAULT_ACTIVE_ITEMS');
+      const defaultActiveItems = [...state.categories].map(item => {
+        return {
+          categorySlug: item.slug,
+          itemId: 0
+        };
+      });
+
+      return { ...state, activeItems: defaultActiveItems };
+    case constants.SET_LOCAL_STORAGE_ACTIVE_ITEMS:
+      const defaultLocalStorageItems = JSON.parse(
+        localStorage.getItem('activeItems')
+      );
+
+      return { ...state, activeItems: defaultLocalStorageItems };
     case constants.SET_ACTIVE_ITEM:
       const activeItems = [...state.activeItems].map(item => {
         if (item.categorySlug === action.payload.activeCategorySlug) {
@@ -95,6 +98,10 @@ export default (state = initialState, action) => {
           return item;
         }
       });
+
+      const activeItemsJson = JSON.stringify(activeItems);
+
+      localStorage.setItem('activeItems', activeItemsJson);
 
       return { ...state, activeItems };
     default:
