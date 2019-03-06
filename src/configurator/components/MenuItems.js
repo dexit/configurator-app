@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as configuratorActions from '../configuratorActions';
+// import * as configuratorActions from '../configuratorActions';
 
 import styles from './MenuItems.module.scss';
 
-class MenuItems extends Component {
-  handleClick = (activeCategorySlug, itemId) => {
-    this.props.setActiveItem(activeCategorySlug, itemId);
-  };
+import ItemsList from './ItemsList';
 
+class MenuItems extends Component {
   render() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
@@ -19,32 +17,6 @@ class MenuItems extends Component {
     const activeCategoryName =
       activeCategoryIndex > -1 ? categories[activeCategoryIndex].name : null;
 
-    const itemsList =
-      activeCategoryIndex > -1 &&
-      categories[activeCategoryIndex].items.map(item => {
-        const activeItemsIndex = configuratorStore.activeItems.findIndex(
-          item => item.categorySlug === activeCategorySlug
-        );
-        const activeItemId =
-          configuratorStore.activeItems[activeItemsIndex].itemId;
-        const activeItemClass = activeItemId === item.id && styles.active;
-
-        return (
-          <div
-            key={item.id}
-            className="col-md-6 p-4 d-flex justify-content-center align-content-center"
-          >
-            <button
-              className={`${styles.item} ${activeItemClass}`}
-              onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
-            >
-              <img src={item.imgThumb} alt="" className="img-fluid" />
-              {item.name}
-            </button>
-          </div>
-        );
-      });
-
     return (
       <div className={styles.wrapper}>
         {activeCategoryName ? (
@@ -53,8 +25,8 @@ class MenuItems extends Component {
           </div>
         ) : null}
         <div className="row">
-          {itemsList ? (
-            itemsList
+          {activeCategoryIndex > -1 ? (
+            <ItemsList />
           ) : (
             <div className="col text-center py-5">
               <p>Wybierz kategorię</p>
@@ -71,10 +43,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    setActiveItem: (activeCategorySlug, itemId) =>
-      dispatch(configuratorActions.setActiveItem(activeCategorySlug, itemId))
-  };
+  return {};
 };
 
 export default connect(

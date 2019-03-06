@@ -2,15 +2,3 @@
   height: 100%;
   background-color: #b7b5b5;
 }
-
-.item {
-  background-color: #fff;
-  box-shadow: none;
-  border: none;
-  outline: none !important;
-  border: 3px solid transparent;
-
-  &.active {
-    border: 3px solid red;
-  }
-}

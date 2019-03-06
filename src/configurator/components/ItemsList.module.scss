@@ -1,0 +1,11 @@
+.item {
+  background-color: #fff;
+  box-shadow: none;
+  border: none;
+  outline: none !important;
+  border: 3px solid transparent;
+
+  &.active {
+    border: 3px solid red;
+  }
+}

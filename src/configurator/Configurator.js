@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import * as configuratorActions from './configuratorActions';
-
 import { Route } from 'react-router-dom';
+
+import styles from './Configurator.module.scss';
 
 import Menu from './components/Menu';
 import MenuItems from './components/MenuItems';
@@ -10,16 +11,14 @@ import ItemImg from './components/ItemImg';
 
 class Configurator extends Component {
   render() {
-    const configStore = this.props.configuratorStore;
-
     return (
-      <div className="d-flex flex-column" style={{ height: '100vh' }}>
+      <div className={`d-flex flex-column ${styles.wrapper}`}>
         <header className="text-center text-uppercase my-5">
           <h1>Konfigurator</h1>
         </header>
         <div className="row flex-grow-1">
           <div className="col-md-2">
-            <Menu categories={configStore.categories} />
+            <Menu />
           </div>
           <div className="col-md-3">
             <Route path="/:category" component={MenuItems} />
