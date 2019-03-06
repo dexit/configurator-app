@@ -31,3 +31,12 @@ export const setActiveItem = (activeCategorySlug, itemId) => {
     }
   };
 };
+
+export const setActiveCategory = categorySlug => {
+  return {
+    type: constants.SET_ACTIVE_CATEGORY,
+    payload: {
+      categorySlug
+    }
+  };
+};

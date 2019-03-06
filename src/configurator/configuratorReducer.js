@@ -66,6 +66,11 @@ const initialState = {
       ]
     }
   ],
+  userSettingsState: {
+    activeCategory: '',
+    activeItems: []
+  },
+  activeCategory: '',
   activeItems: []
 };
 
@@ -104,6 +109,15 @@ export default (state = initialState, action) => {
       localStorage.setItem('activeItems', activeItemsJson);
 
       return { ...state, activeItems };
+    case constants.SET_ACTIVE_CATEGORY:
+      const activeCategory = action.payload.categorySlug
+        ? action.payload.categorySlug
+        : state.categories[0].slug;
+
+      return {
+        ...state,
+        activeCategory
+      };
     default:
       return state;
   }

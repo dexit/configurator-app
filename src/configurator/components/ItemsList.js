@@ -6,8 +6,8 @@ import { withRouter } from 'react-router-dom';
 import styles from './ItemsList.module.scss';
 
 class ItemsList extends Component {
-  handleClick = (activeCategoryParamsSlug, itemId) => {
-    this.props.setActiveItem(activeCategoryParamsSlug, itemId);
+  handleClick = (activeCategorySlug, itemId) => {
+    this.props.setActiveItem(activeCategorySlug, itemId);
   };
 
   componentDidMount() {
@@ -17,9 +17,9 @@ class ItemsList extends Component {
   list() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
-    const activeCategoryParamsSlug = this.props.match.params.category;
+    const activeCategorySlug = configuratorStore.activeCategory;
     const activeCategoryIndex = categories.findIndex(
-      category => category.slug === activeCategoryParamsSlug
+      category => category.slug === activeCategorySlug
     );
 
     let list = [];
@@ -28,7 +28,7 @@ class ItemsList extends Component {
       list = categories[activeCategoryIndex].items.map(item => {
         const activeItemClass = () => {
           const activeItemsIndex = configuratorStore.activeItems.findIndex(
-            item => item.categorySlug === activeCategoryParamsSlug
+            item => item.categorySlug === activeCategorySlug
           );
           const activeItemId =
             configuratorStore.activeItems[activeItemsIndex].itemId;
@@ -43,11 +43,7 @@ class ItemsList extends Component {
           >
             <button
               className={`${styles.item} ${activeItemClass()}`}
-              onClick={this.handleClick.bind(
-                this,
-                activeCategoryParamsSlug,
-                item.id
-              )}
+              onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
             >
               <img src={item.imgThumb} alt="" className="img-fluid" />
               {item.name}
@@ -73,10 +69,8 @@ const mapDispatchToProps = dispatch => {
   return {
     setInitialActiveItems: () =>
       dispatch(configuratorActions.setInitialActiveItems()),
-    setActiveItem: (activeCategoryParamsSlug, itemId) =>
-      dispatch(
-        configuratorActions.setActiveItem(activeCategoryParamsSlug, itemId)
-      )
+    setActiveItem: (activeCategorySlug, itemId) =>
+      dispatch(configuratorActions.setActiveItem(activeCategorySlug, itemId))
   };
 };
 
