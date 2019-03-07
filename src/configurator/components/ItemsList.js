@@ -20,20 +20,17 @@ class ItemsList extends Component {
     const activeCategoryIndex = categories.findIndex(
       category => category.slug === activeCategorySlug
     );
+    const activeItemsState = configuratorStore.userSettings.activeItems;
 
     let list = [];
 
-    if (
-      activeCategoryIndex > -1 &&
-      configuratorStore.userSettings.activeItems.length
-    ) {
+    if (activeCategoryIndex > -1 && activeItemsState.length) {
       list = categories[activeCategoryIndex].items.map(item => {
         const activeItemClass = () => {
-          const activeItemsIndex = configuratorStore.userSettings.activeItems.findIndex(
+          const activeItemsIndex = activeItemsState.findIndex(
             item => item.categorySlug === activeCategorySlug
           );
-          const activeItemId =
-            configuratorStore.userSettings.activeItems[activeItemsIndex].itemId;
+          const activeItemId = activeItemsState[activeItemsIndex].itemId;
 
           return activeItemId === item.id ? styles.active : null;
         };
