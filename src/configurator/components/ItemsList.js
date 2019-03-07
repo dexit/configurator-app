@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
-import { withRouter } from 'react-router-dom';
 
 import styles from './ItemsList.module.scss';
 
@@ -17,21 +16,24 @@ class ItemsList extends Component {
   list() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
-    const activeCategorySlug = configuratorStore.activeCategory;
+    const activeCategorySlug = configuratorStore.userSettings.activeCategory;
     const activeCategoryIndex = categories.findIndex(
       category => category.slug === activeCategorySlug
     );
 
     let list = [];
 
-    if (activeCategoryIndex > -1 && configuratorStore.activeItems.length) {
+    if (
+      activeCategoryIndex > -1 &&
+      configuratorStore.userSettings.activeItems.length
+    ) {
       list = categories[activeCategoryIndex].items.map(item => {
         const activeItemClass = () => {
-          const activeItemsIndex = configuratorStore.activeItems.findIndex(
+          const activeItemsIndex = configuratorStore.userSettings.activeItems.findIndex(
             item => item.categorySlug === activeCategorySlug
           );
           const activeItemId =
-            configuratorStore.activeItems[activeItemsIndex].itemId;
+            configuratorStore.userSettings.activeItems[activeItemsIndex].itemId;
 
           return activeItemId === item.id ? styles.active : null;
         };
@@ -74,9 +76,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ItemsList)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemsList);

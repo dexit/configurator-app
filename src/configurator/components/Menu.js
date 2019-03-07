@@ -11,10 +11,6 @@ class Menu extends Component {
     this.props.setActiveCategory(categorySlug);
   };
 
-  componentDidMount() {
-    this.props.setActiveCategory();
-  }
-
   render() {
     const configuratorStore = this.props.configuratorStore;
 
@@ -25,7 +21,9 @@ class Menu extends Component {
           key={item.id}
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
-          isActive={() => item.slug === configuratorStore.activeCategory}
+          isActive={() =>
+            item.slug === configuratorStore.userSettings.activeCategory
+          }
           onClick={this.handleClick.bind(this, item.slug)}
         >
           {item.name}

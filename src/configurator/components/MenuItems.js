@@ -10,7 +10,7 @@ class MenuItems extends Component {
   render() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
-    const activeCategorySlug = configuratorStore.activeCategory;
+    const activeCategorySlug = configuratorStore.userSettings.activeCategory;
     const activeCategoryIndex = categories.findIndex(
       category => category.slug === activeCategorySlug
     );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import * as configuratorActions from './configuratorActions';
+import * as configuratorActions from './configuratorActions';
 import { Route } from 'react-router-dom';
 
 import styles from './Configurator.module.scss';
@@ -10,6 +10,14 @@ import MenuItems from './components/MenuItems';
 import ItemImg from './components/ItemImg';
 
 class Configurator extends Component {
+  componentDidMount() {
+    const matchCategory = this.props.match.params.category;
+    const firstCategory = this.props.configuratorStore.categories[0].slug;
+    const activeCategory = matchCategory ? matchCategory : firstCategory;
+
+    this.props.setActiveCategory(activeCategory);
+  }
+
   render() {
     return (
       <div className={`d-flex flex-column ${styles.wrapper}`}>
@@ -21,7 +29,7 @@ class Configurator extends Component {
             <Menu />
           </div>
           <div className="col-md-3">
-            <Route path="/:category" component={MenuItems} />
+            <Route component={MenuItems} />
           </div>
           <div className="col-md-7">
             <ItemImg />
@@ -37,7 +45,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setActiveCategory: categorySlug =>
+      dispatch(configuratorActions.setActiveCategory(categorySlug))
+  };
 };
 
 export default connect(

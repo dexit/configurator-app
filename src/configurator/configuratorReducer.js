@@ -66,18 +66,15 @@ const initialState = {
       ]
     }
   ],
-  userSettingsState: {
+  userSettings: {
     activeCategory: '',
     activeItems: []
-  },
-  activeCategory: '',
-  activeItems: []
+  }
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case constants.SET_DEFAULT_ACTIVE_ITEMS:
-      console.log('SET_DEFAULT_ACTIVE_ITEMS');
       const defaultActiveItems = [...state.categories].map(item => {
         return {
           categorySlug: item.slug,
@@ -85,15 +82,27 @@ export default (state = initialState, action) => {
         };
       });
 
-      return { ...state, activeItems: defaultActiveItems };
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          activeItems: defaultActiveItems
+        }
+      };
     case constants.SET_LOCAL_STORAGE_ACTIVE_ITEMS:
       const defaultLocalStorageItems = JSON.parse(
         localStorage.getItem('activeItems')
       );
 
-      return { ...state, activeItems: defaultLocalStorageItems };
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          activeItems: defaultLocalStorageItems
+        }
+      };
     case constants.SET_ACTIVE_ITEM:
-      const activeItems = [...state.activeItems].map(item => {
+      const activeItems = [...state.userSettings.activeItems].map(item => {
         if (item.categorySlug === action.payload.activeCategorySlug) {
           return {
             ...item,
@@ -108,7 +117,13 @@ export default (state = initialState, action) => {
 
       localStorage.setItem('activeItems', activeItemsJson);
 
-      return { ...state, activeItems };
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          activeItems
+        }
+      };
     case constants.SET_ACTIVE_CATEGORY:
       const activeCategory = action.payload.categorySlug
         ? action.payload.categorySlug
@@ -116,7 +131,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        activeCategory
+        userSettings: { ...state.userSettings, activeCategory }
       };
     default:
       return state;
