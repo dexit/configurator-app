@@ -72,9 +72,11 @@ const initialState = {
   }
 };
 
+let userSettings;
+
 export default (state = initialState, action) => {
   switch (action.type) {
-    case constants.SET_DEFAULT_ACTIVE_ITEMS:
+    case constants.CONFIGURATOR_SET_DEFAULT_ACTIVE_ITEMS:
       const defaultActiveItems = [...state.categories].map(item => {
         return {
           categorySlug: item.slug,
@@ -82,26 +84,23 @@ export default (state = initialState, action) => {
         };
       });
 
-      return {
-        ...state,
-        userSettings: {
-          ...state.userSettings,
-          activeItems: defaultActiveItems
-        }
+      userSettings = {
+        ...state.userSettings,
+        activeItems: defaultActiveItems
       };
-    case constants.SET_LOCAL_STORAGE_ACTIVE_ITEMS:
-      const defaultLocalStorageItems = JSON.parse(
-        localStorage.getItem('activeItems')
-      );
 
       return {
         ...state,
-        userSettings: {
-          ...state.userSettings,
-          activeItems: defaultLocalStorageItems
-        }
+        userSettings
       };
-    case constants.SET_ACTIVE_ITEM:
+    case constants.CONFIGURATOR_SET_LOCAL_STORAGE_ACTIVE_ITEMS:
+      userSettings = JSON.parse(localStorage.getItem('userSettings'));
+
+      return {
+        ...state,
+        userSettings
+      };
+    case constants.CONFIGURATOR_SET_ACTIVE_ITEM:
       const activeItems = [...state.userSettings.activeItems].map(item => {
         if (item.categorySlug === action.payload.activeCategorySlug) {
           return {
@@ -113,25 +112,39 @@ export default (state = initialState, action) => {
         }
       });
 
-      const activeItemsJson = JSON.stringify(activeItems);
+      userSettings = {
+        ...state.userSettings,
+        activeItems: activeItems
+      };
 
-      localStorage.setItem('activeItems', activeItemsJson);
+      localStorage.setItem('userSettings', JSON.stringify(userSettings));
 
       return {
         ...state,
-        userSettings: {
-          ...state.userSettings,
-          activeItems
-        }
+        userSettings
       };
-    case constants.SET_ACTIVE_CATEGORY:
+    case constants.CONFIGURATOR_SET_ACTIVE_CATEGORY:
       const activeCategory = action.payload.categorySlug
         ? action.payload.categorySlug
         : state.categories[0].slug;
 
+      userSettings = {
+        ...state.userSettings,
+        activeCategory
+      };
+
+      localStorage.setItem('userSettings', JSON.stringify(userSettings));
+
       return {
         ...state,
-        userSettings: { ...state.userSettings, activeCategory }
+        userSettings
+      };
+    case constants.CONFIGURATOR_LOAD_SETTINGS_FROM_LOCAL_STORAGE:
+      const settingsLocalStorage = action.payload.settingsLocalStorage;
+
+      return {
+        ...state,
+        userSettings: settingsLocalStorage
       };
     default:
       return state;

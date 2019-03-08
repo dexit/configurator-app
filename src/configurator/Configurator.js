@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from './configuratorActions';
-import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import styles from './Configurator.module.scss';
 
@@ -10,12 +10,58 @@ import MenuItems from './components/MenuItems';
 import ItemImg from './components/ItemImg';
 
 class Configurator extends Component {
-  componentDidMount() {
+  setCategoryUrlIfEmpty() {
     const matchCategory = this.props.match.params.category;
-    const firstCategory = this.props.configuratorStore.categories[0].slug;
-    const activeCategory = matchCategory ? matchCategory : firstCategory;
+    const activeCategory = this.props.configuratorStore.userSettings
+      .activeCategory;
 
-    this.props.setActiveCategory(activeCategory);
+    if (!matchCategory) {
+      this.props.history.replace(activeCategory);
+    }
+  }
+
+  loadSettings() {
+    const firstCategory = this.props.configuratorStore.categories[0].slug;
+    const matchCategory = this.props.match.params.category;
+
+    const settingsLocalStorage = JSON.parse(
+      localStorage.getItem('userSettings')
+    );
+
+    function setCategory() {
+      if (matchCategory) {
+        this.props.setActiveCategory(matchCategory);
+        this.props.history.replace(matchCategory);
+      } else {
+        this.props.setActiveCategory(firstCategory);
+        this.props.history.replace(firstCategory);
+      }
+    }
+
+    if (!settingsLocalStorage || !settingsLocalStorage.activeCategory) {
+      setCategory();
+    } else {
+      this.props.loadSettingsFromLocalStorage(settingsLocalStorage);
+    }
+  }
+
+  updateCategoryFromUrl() {
+    const matchCategory = this.props.match.params.category;
+    const activeCategory = this.props.configuratorStore.userSettings
+      .activeCategory;
+
+    if (matchCategory && matchCategory !== activeCategory) {
+      this.props.setActiveCategory(matchCategory);
+    }
+  }
+
+  componentDidMount() {
+    this.loadSettings();
+  }
+
+  componentDidUpdate() {
+    this.setCategoryUrlIfEmpty();
+    this.updateCategoryFromUrl();
   }
 
   render() {
@@ -29,7 +75,7 @@ class Configurator extends Component {
             <Menu />
           </div>
           <div className="col-md-3">
-            <Route component={MenuItems} />
+            <MenuItems />
           </div>
           <div className="col-md-7">
             <ItemImg />
@@ -47,11 +93,17 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug))
+      dispatch(configuratorActions.setActiveCategory(categorySlug)),
+    loadSettingsFromLocalStorage: settingsLocalStorage =>
+      dispatch(
+        configuratorActions.loadSettingsFromLocalStorage(settingsLocalStorage)
+      )
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Configurator);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Configurator)
+);
