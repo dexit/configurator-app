@@ -93,13 +93,6 @@ export default (state = initialState, action) => {
         ...state,
         userSettings
       };
-    case constants.CONFIGURATOR_SET_LOCAL_STORAGE_ACTIVE_ITEMS:
-      userSettings = JSON.parse(localStorage.getItem('userSettings'));
-
-      return {
-        ...state,
-        userSettings
-      };
     case constants.CONFIGURATOR_SET_ACTIVE_ITEM:
       const activeItems = [...state.userSettings.activeItems].map(item => {
         if (item.categorySlug === action.payload.activeCategorySlug) {

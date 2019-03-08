@@ -6,25 +6,6 @@ export const setDefaultActiveItems = () => {
   };
 };
 
-export const setLocalStorageActiveItems = () => {
-  return {
-    type: constants.CONFIGURATOR_SET_LOCAL_STORAGE_ACTIVE_ITEMS
-  };
-};
-
-export const setInitialActiveItems = () => {
-  return dispatch => {
-    const userSettings = JSON.parse(localStorage.getItem('userSettings'));
-    const activeCategory = userSettings.activeItems.length;
-
-    if (activeCategory) {
-      dispatch(setLocalStorageActiveItems());
-    } else {
-      dispatch(setDefaultActiveItems());
-    }
-  };
-};
-
 export const setActiveItem = (activeCategorySlug, itemId) => {
   return {
     type: constants.CONFIGURATOR_SET_ACTIVE_ITEM,

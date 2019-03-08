@@ -28,7 +28,7 @@ class Configurator extends Component {
       localStorage.getItem('userSettings')
     );
 
-    function setCategory() {
+    const setCategory = () => {
       if (matchCategory) {
         this.props.setActiveCategory(matchCategory);
         this.props.history.replace(matchCategory);
@@ -36,7 +36,7 @@ class Configurator extends Component {
         this.props.setActiveCategory(firstCategory);
         this.props.history.replace(firstCategory);
       }
-    }
+    };
 
     if (!settingsLocalStorage || !settingsLocalStorage.activeCategory) {
       setCategory();
