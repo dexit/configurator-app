@@ -1,6 +1,6 @@
 import * as constants from '../store/constants';
 
-const initialState = {
+let initialState = {
   categories: [
     {
       id: 0,
@@ -72,7 +72,14 @@ const initialState = {
   }
 };
 
-let userSettings;
+const settingsLocalStorage = JSON.parse(localStorage.getItem('userSettings'));
+
+if (settingsLocalStorage) {
+  initialState = {
+    ...initialState,
+    userSettings: settingsLocalStorage
+  };
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -84,14 +91,14 @@ export default (state = initialState, action) => {
         };
       });
 
-      userSettings = {
+      const userSettingsDefaultItems = {
         ...state.userSettings,
         activeItems: defaultActiveItems
       };
 
       return {
         ...state,
-        userSettings
+        userSettings: userSettingsDefaultItems
       };
     case constants.CONFIGURATOR_SET_ACTIVE_ITEM:
       const activeItems = [...state.userSettings.activeItems].map(item => {
@@ -105,39 +112,38 @@ export default (state = initialState, action) => {
         }
       });
 
-      userSettings = {
+      const userSettingsActiveItems = {
         ...state.userSettings,
         activeItems: activeItems
       };
 
-      localStorage.setItem('userSettings', JSON.stringify(userSettings));
+      localStorage.setItem(
+        'userSettings',
+        JSON.stringify(userSettingsActiveItems)
+      );
 
       return {
         ...state,
-        userSettings
+        userSettings: userSettingsActiveItems
       };
     case constants.CONFIGURATOR_SET_ACTIVE_CATEGORY:
       const activeCategory = action.payload.categorySlug
         ? action.payload.categorySlug
         : state.categories[0].slug;
 
-      userSettings = {
+      const userSettingsActiveCategory = {
         ...state.userSettings,
         activeCategory
       };
 
-      localStorage.setItem('userSettings', JSON.stringify(userSettings));
+      localStorage.setItem(
+        'userSettings',
+        JSON.stringify(userSettingsActiveCategory)
+      );
 
       return {
         ...state,
-        userSettings
-      };
-    case constants.CONFIGURATOR_LOAD_SETTINGS_FROM_LOCAL_STORAGE:
-      const settingsLocalStorage = action.payload.settingsLocalStorage;
-
-      return {
-        ...state,
-        userSettings: settingsLocalStorage
+        userSettings: userSettingsActiveCategory
       };
     default:
       return state;

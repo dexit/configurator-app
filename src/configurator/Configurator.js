@@ -21,12 +21,15 @@ class Configurator extends Component {
   }
 
   loadSettings() {
-    const firstCategory = this.props.configuratorStore.categories[0].slug;
-    const matchCategory = this.props.match.params.category;
+    let firstCategory = '';
 
-    const settingsLocalStorage = JSON.parse(
-      localStorage.getItem('userSettings')
-    );
+    if (this.props.configuratorStore.categories.length) {
+      firstCategory = this.props.configuratorStore.categories[0].slug;
+    }
+
+    const matchCategory = this.props.match.params.category;
+    const activeCategory = this.props.configuratorStore.userSettings
+      .activeCategory;
 
     const setCategory = () => {
       if (matchCategory) {
@@ -38,10 +41,8 @@ class Configurator extends Component {
       }
     };
 
-    if (!settingsLocalStorage || !settingsLocalStorage.activeCategory) {
+    if (!activeCategory) {
       setCategory();
-    } else {
-      this.props.loadSettingsFromLocalStorage(settingsLocalStorage);
     }
   }
 
@@ -93,11 +94,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug)),
-    loadSettingsFromLocalStorage: settingsLocalStorage =>
-      dispatch(
-        configuratorActions.loadSettingsFromLocalStorage(settingsLocalStorage)
-      )
+      dispatch(configuratorActions.setActiveCategory(categorySlug))
   };
 };
 

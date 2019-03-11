@@ -24,12 +24,3 @@ export const setActiveCategory = categorySlug => {
     }
   };
 };
-
-export const loadSettingsFromLocalStorage = settingsLocalStorage => {
-  return {
-    type: constants.CONFIGURATOR_LOAD_SETTINGS_FROM_LOCAL_STORAGE,
-    payload: {
-      settingsLocalStorage
-    }
-  };
-};
