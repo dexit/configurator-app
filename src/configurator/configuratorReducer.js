@@ -1,6 +1,8 @@
 import * as constants from '../store/constants';
 
-let initialState = {
+const settingsLocalStorage = JSON.parse(localStorage.getItem('userSettings'));
+
+const initialState = {
   categories: [
     {
       id: 0,
@@ -68,18 +70,10 @@ let initialState = {
   ],
   userSettings: {
     activeCategory: '',
-    activeItems: []
+    activeItems: [],
+    ...settingsLocalStorage
   }
 };
-
-const settingsLocalStorage = JSON.parse(localStorage.getItem('userSettings'));
-
-if (settingsLocalStorage) {
-  initialState = {
-    ...initialState,
-    userSettings: settingsLocalStorage
-  };
-}
 
 export default (state = initialState, action) => {
   switch (action.type) {
