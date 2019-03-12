@@ -12,15 +12,15 @@ const initialState = {
         {
           id: 0,
           name: 'model 1',
-          imgThumb: './product.jpg',
-          imgLarge: './product.jpg',
+          imgThumb: './img/model-1.png',
+          imgLarge: './img/model-1.png',
           indexCss: 0
         },
         {
           id: 1,
           name: 'model 2',
-          imgThumb: './product.jpg',
-          imgLarge: './product.jpg',
+          imgThumb: './img/model-2.png',
+          imgLarge: './img/model-2.png',
           indexCss: 0
         }
       ]
@@ -31,17 +31,17 @@ const initialState = {
       name: 'Kolor dodatków',
       items: [
         {
-          id: 0,
+          id: 2,
           name: 'dodatek 1',
-          imgThumb: './product.jpg',
-          imgLarge: './product.jpg',
+          imgThumb: './img/dodatki-1.png',
+          imgLarge: './img/dodatki-1.png',
           indexCss: 1
         },
         {
-          id: 1,
+          id: 3,
           name: 'dodatek 2',
-          imgThumb: './product.jpg',
-          imgLarge: './product.jpg',
+          imgThumb: './img/dodatki-2.png',
+          imgLarge: './img/dodatki-2.png',
           indexCss: 1
         }
       ]
@@ -52,17 +52,17 @@ const initialState = {
       name: 'Kolor rękawków',
       items: [
         {
-          id: 0,
+          id: 4,
           name: 'kolor 1',
-          imgThumb: './product.jpg',
-          imgLarge: './product.jpg',
+          imgThumb: './img/rekawki-1.png',
+          imgLarge: './img/rekawki-1.png',
           indexCss: 1
         },
         {
-          id: 1,
+          id: 5,
           name: 'kolor 2',
-          imgThumb: './product.jpg',
-          imgLarge: './product.jpg',
+          imgThumb: './img/rekawki-2.png',
+          imgLarge: './img/rekawki-2.png',
           indexCss: 1
         }
       ]
