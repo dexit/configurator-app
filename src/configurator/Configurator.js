@@ -50,17 +50,25 @@ class Configurator extends Component {
     const matchCategory = this.props.match.params.category;
     const activeCategory = this.props.configuratorStore.userSettings
       .activeCategory;
+    const categories = this.props.configuratorStore.categories;
+    const firstCategory = categories[0].slug;
 
     if (matchCategory && matchCategory !== activeCategory) {
       this.props.setActiveCategory(matchCategory);
+    }
+
+    const matchCategoryExist = categories.findIndex(
+      item => item.slug === matchCategory
+    );
+
+    if (matchCategoryExist === -1) {
+      this.props.setActiveCategory(firstCategory);
+      this.props.history.replace(firstCategory);
     }
   }
 
   componentDidMount() {
     this.loadSettings();
-  }
-
-  componentDidUpdate() {
     this.setCategoryUrlIfEmpty();
     this.updateCategoryFromUrl();
   }

@@ -36,6 +36,10 @@ class ItemsList extends Component {
           );
           const activeItemId = activeItemsState[activeItemsIndex].itemId;
 
+          if (activeItemId > categories[activeCategoryIndex].items.length) {
+            this.props.setActiveItem(activeCategorySlug, 0);
+          }
+
           return activeItemId === item.id ? styles.active : null;
         };
 
