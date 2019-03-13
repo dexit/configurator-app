@@ -23,6 +23,7 @@ class ItemImg extends Component {
                   alt=""
                   key={item.id}
                   className={styles.img}
+                  style={{zIndex: item.indexCss}}
                 />
               );
               images.push(img);
