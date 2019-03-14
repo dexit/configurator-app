@@ -1,4 +1,6 @@
 .item {
+  position: relative;
+  padding: 0;
   background-color: #fff;
   box-shadow: none;
   border: none;
@@ -8,4 +10,18 @@
   &.active {
     border: 3px solid red;
   }
+}
+
+.simpleModel {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.thumb {  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
 }

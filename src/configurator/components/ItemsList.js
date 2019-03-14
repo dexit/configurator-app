@@ -48,7 +48,12 @@ class ItemsList extends Component {
               className={`${styles.item} ${activeItemClass()}`}
               onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
             >
-              <img src={item.imgThumb} alt="" className="img-fluid" />
+              <img
+                src="./img/simple-model.png"
+                alt=""
+                className={styles.simpleModel}
+              />
+              <img src={item.imgThumb} alt="" className={styles.thumb} />
               {item.name}
             </button>
           </div>
