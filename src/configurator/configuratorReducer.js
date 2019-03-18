@@ -111,9 +111,12 @@ export default (state = initialState, action) => {
       const categories = state.categories.map(category => {
         const activeItem = stateActiveItems[category.slug];
         let items = [];
+        let activeItemExist = false;
 
         items = category.items.map(item => {
           if (item.id === activeItem) {
+            activeItemExist = true;
+
             return {
               ...item,
               active: true
@@ -125,6 +128,10 @@ export default (state = initialState, action) => {
             active: false
           };
         });
+
+        if (!activeItemExist) {
+          items[0].active = true;
+        }
 
         return {
           ...category,
