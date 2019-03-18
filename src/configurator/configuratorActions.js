@@ -6,9 +6,15 @@ export const setDefaultActiveItems = () => {
   };
 };
 
-export const setActiveItem = (activeCategorySlug, itemId) => {
+export const setActiveItems = () => {
   return {
-    type: constants.CONFIGURATOR_SET_ACTIVE_ITEM,
+    type: constants.CONFIGURATOR_SET_ACTIVE_ITEMS
+  };
+};
+
+export const setActiveItemUserSettings = (activeCategorySlug, itemId) => {
+  return {
+    type: constants.CONFIGURATOR_SET_ACTIVE_ITEM_USER_SETTINGS,
     payload: {
       activeCategorySlug,
       itemId

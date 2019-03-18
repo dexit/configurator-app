@@ -6,15 +6,18 @@ import styles from './ItemsList.module.scss';
 
 class ItemsList extends Component {
   handleClick = (activeCategorySlug, itemId) => {
-    this.props.setActiveItem(activeCategorySlug, itemId);
+    this.props.setActiveItemUserSettings(activeCategorySlug, itemId);
+    this.props.setActiveItems();
   };
 
   componentDidMount() {
     const activeItems = this.props.configuratorStore.userSettings.activeItems;
 
-    if (!activeItems.length) {
+    if (activeItems === null) {
       this.props.setDefaultActiveItems();
     }
+
+    this.props.setActiveItems();
   }
 
   list() {
@@ -28,16 +31,9 @@ class ItemsList extends Component {
 
     let list = [];
 
-    if (activeCategoryIndex > -1 && activeItemsState.length) {
+    if (activeCategoryIndex > -1 && activeItemsState !== null) {
       list = categories[activeCategoryIndex].items.map(item => {
-        const activeItemClass = () => {
-          const activeItemsIndex = activeItemsState.findIndex(
-            item => item.categorySlug === activeCategorySlug
-          );
-          const activeItemId = activeItemsState[activeItemsIndex].itemId;
-
-          return activeItemId === item.id ? styles.active : null;
-        };
+        const activeItemClass = () => item.active && styles.active;
 
         return (
           <div
@@ -77,8 +73,14 @@ const mapDispatchToProps = dispatch => {
   return {
     setDefaultActiveItems: () =>
       dispatch(configuratorActions.setDefaultActiveItems()),
-    setActiveItem: (activeCategorySlug, itemId) =>
-      dispatch(configuratorActions.setActiveItem(activeCategorySlug, itemId))
+    setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
+    setActiveItemUserSettings: (activeCategorySlug, itemId) =>
+      dispatch(
+        configuratorActions.setActiveItemUserSettings(
+          activeCategorySlug,
+          itemId
+        )
+      )
   };
 };
 

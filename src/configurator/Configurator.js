@@ -86,9 +86,7 @@ class Configurator extends Component {
           <div className="col-md-3">
             <MenuItems />
           </div>
-          <div className="col-md-7">
-            <ItemImg />
-          </div>
+          <div className="col-md-7">{/* <ItemImg /> */}</div>
         </div>
       </div>
     );
