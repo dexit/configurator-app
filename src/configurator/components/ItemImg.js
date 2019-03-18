@@ -6,35 +6,23 @@ import styles from './ItemImg.module.scss';
 class ItemImg extends Component {
   render() {
     const categories = this.props.configuratorStore.categories;
-    const activeItems = this.props.configuratorStore.userSettings.activeItems;
 
-    const images = categories.map(category => {
-      return activeItems.map(activeItem => {
-        let items = [];
-
-        if (category.slug === activeItem.categorySlug) {
-          let item = category.items.map((item, index) => {
-            let images = [];
-
-            if (item.id === activeItem.itemId) {
-              let img = (
-                <img
-                  src={item.imgLarge}
-                  alt=""
-                  key={item.id}
-                  className={styles.img}
-                  style={{zIndex: item.indexCss}}
-                />
-              );
-              images.push(img);
-            }
-            return images;
-          });
-          items.push(item);
+    const images = categories.map(category =>
+      category.items.map(item => {
+        if (item.active) {
+          return (
+            <img
+              src={item.imgLarge}
+              alt=""
+              key={item.id}
+              className={styles.img}
+              style={{ zIndex: item.indexCss }}
+            />
+          );
         }
-        return items;
-      });
-    });
+        return null;
+      })
+    );
 
     return (
       <div
