@@ -57,6 +57,8 @@ class Configurator extends Component {
 
     if (matchCategory && matchCategory !== activeCategory && !summaryOpen) {
       this.props.setActiveCategory(matchCategory);
+    } else if (summaryOpen === true) {
+      this.props.history.replace('gotowe');
     }
 
     const matchCategoryExist = categories.findIndex(

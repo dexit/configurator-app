@@ -11,20 +11,35 @@ class SavedProducts extends Component {
     this.props.setActiveItems();
   };
 
+  handleAddProductClick = () => {};
+
+  handleRemoveProductClick = () => {};
+
   render() {
     const modal = this.props.configuratorStore.savedProductsModal;
     const savedProducts = this.props.configuratorStore.userSettings
       .savedProducts;
 
     const savedProductsList = savedProducts.map((item, index) => (
-      <button
-        key={index}
-        className={styles.item}
-        onClick={this.handleProductClick.bind(this, item.productParts)}
-      >
-        Produkt {index}
-      </button>
+      <div className={styles.itemWrapper} key={index}>
+        <button
+          className={styles.btnRemove}
+          onClick={this.handleRemoveProductClick}
+        >
+          Usuń
+        </button>
+        <button
+          className={styles.btnChange}
+          onClick={this.handleProductClick.bind(this, item.productParts)}
+        >
+          Produkt {index} <br />
+        </button>
+      </div>
     ));
+
+    const btnAddProduct = (
+      <button onClick={this.handleAddProductClick}>Zapisz</button>
+    );
 
     return (
       <div>
@@ -37,7 +52,10 @@ class SavedProducts extends Component {
           <ModalHeader toggle={this.props.savedProductsToggle}>
             Zapisane produkty
           </ModalHeader>
-          <ModalBody>{savedProductsList}</ModalBody>
+          <ModalBody>
+            {savedProductsList}
+            {btnAddProduct}
+          </ModalBody>
         </Modal>
       </div>
     );
