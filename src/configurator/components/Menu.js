@@ -7,12 +7,17 @@ import styles from './Menu.module.scss';
 import { NavLink } from 'react-router-dom';
 
 class Menu extends Component {
-  handleClick = categorySlug => {
+  handleCategoryClick = categorySlug => {
     this.props.setActiveCategory(categorySlug);
+  };
+
+  handleSummaryClick = () => {
+    this.props.openSummary();
   };
 
   render() {
     const configuratorStore = this.props.configuratorStore;
+    const userSettings = configuratorStore.userSettings;
 
     const menu = configuratorStore.categories.map(item => {
       return (
@@ -22,16 +27,34 @@ class Menu extends Component {
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
           isActive={() =>
-            item.slug === configuratorStore.userSettings.activeCategory
+            item.slug === userSettings.activeCategory &&
+            userSettings.summaryOpen === false
           }
-          onClick={this.handleClick.bind(this, item.slug)}
+          onClick={this.handleCategoryClick.bind(this, item.slug)}
         >
           {item.name}
         </NavLink>
       );
     });
 
-    return <div className={styles.wrapper}>{menu}</div>;
+    const summary = (
+      <NavLink
+        to={'/gotowe'}
+        className={`d-block px-5 py-3 ${styles.link}`}
+        activeClassName={styles.active}
+        isActive={() => userSettings.summaryOpen === true}
+        onClick={this.handleSummaryClick}
+      >
+        Gotowe
+      </NavLink>
+    );
+
+    return (
+      <div className={styles.wrapper}>
+        {menu}
+        {summary}
+      </div>
+    );
   }
 }
 
@@ -42,7 +65,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug))
+      dispatch(configuratorActions.setActiveCategory(categorySlug)),
+    openSummary: () => dispatch(configuratorActions.openSummary())
   };
 };
 

@@ -10,16 +10,6 @@ class ItemsList extends Component {
     this.props.setActiveItems();
   };
 
-  componentDidMount() {
-    const activeItems = this.props.configuratorStore.userSettings.activeItems;
-
-    if (activeItems === null) {
-      this.props.setDefaultActiveItems();
-    }
-
-    this.props.setActiveItems();
-  }
-
   list() {
     const configuratorStore = this.props.configuratorStore;
     const categories = configuratorStore.categories;
@@ -71,8 +61,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setDefaultActiveItems: () =>
-      dispatch(configuratorActions.setDefaultActiveItems()),
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
     setActiveItemUserSettings: (activeCategorySlug, itemId) =>
       dispatch(

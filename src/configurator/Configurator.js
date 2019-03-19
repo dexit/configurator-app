@@ -8,6 +8,7 @@ import styles from './Configurator.module.scss';
 import Menu from './components/Menu';
 import MenuItems from './components/MenuItems';
 import ItemImg from './components/ItemImg';
+import Summary from './components/Summary';
 
 class Configurator extends Component {
   setCategoryUrlIfEmpty() {
@@ -52,8 +53,9 @@ class Configurator extends Component {
       .activeCategory;
     const categories = this.props.configuratorStore.categories;
     const firstCategory = categories[0].slug;
+    const summaryOpen = this.props.configuratorStore.userSettings.summaryOpen;
 
-    if (matchCategory && matchCategory !== activeCategory) {
+    if (matchCategory && matchCategory !== activeCategory && !summaryOpen) {
       this.props.setActiveCategory(matchCategory);
     }
 
@@ -61,7 +63,7 @@ class Configurator extends Component {
       item => item.slug === matchCategory
     );
 
-    if (matchCategoryExist === -1) {
+    if (matchCategoryExist === -1 && !summaryOpen) {
       this.props.setActiveCategory(firstCategory);
       this.props.history.replace(firstCategory);
     }
@@ -71,6 +73,14 @@ class Configurator extends Component {
     this.loadSettings();
     this.setCategoryUrlIfEmpty();
     this.updateCategoryFromUrl();
+
+    const activeItems = this.props.configuratorStore.userSettings.activeItems;
+
+    if (activeItems === null) {
+      this.props.setDefaultActiveItems();
+    }
+
+    this.props.setActiveItems();
   }
 
   render() {
@@ -84,7 +94,11 @@ class Configurator extends Component {
             <Menu />
           </div>
           <div className="col-md-3">
-            <MenuItems />
+            {this.props.match.params.category === 'gotowe' ? (
+              <Summary />
+            ) : (
+              <MenuItems />
+            )}
           </div>
           <div className="col-md-7">
             <ItemImg />
@@ -102,7 +116,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug))
+      dispatch(configuratorActions.setActiveCategory(categorySlug)),
+    setDefaultActiveItems: () =>
+      dispatch(configuratorActions.setDefaultActiveItems()),
+    setActiveItems: () => dispatch(configuratorActions.setActiveItems())
   };
 };
 

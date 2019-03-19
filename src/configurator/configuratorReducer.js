@@ -76,6 +76,7 @@ const initialState = {
   ],
   userSettings: {
     activeCategory: '',
+    summaryOpen: false,
     activeItems: null,
     ...settingsLocalStorage
   }
@@ -167,7 +168,8 @@ export default (state = initialState, action) => {
 
       const userSettingsActiveCategory = {
         ...state.userSettings,
-        activeCategory
+        activeCategory,
+        summaryOpen: false
       };
 
       localStorage.setItem(
@@ -178,6 +180,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userSettings: userSettingsActiveCategory
+      };
+    case constants.CONFIGURATOR_OPEN_SUMMARY:
+      const userSettingsSummaryOpen = {
+        ...state.userSettings,
+        summaryOpen: true
+      };
+
+      localStorage.setItem(
+        'userSettings',
+        JSON.stringify(userSettingsSummaryOpen)
+      );
+
+      return {
+        ...state,
+        userSettings: userSettingsSummaryOpen
       };
     default:
       return state;
