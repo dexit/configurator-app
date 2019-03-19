@@ -36,3 +36,24 @@ export const openSummary = () => {
     type: constants.CONFIGURATOR_OPEN_SUMMARY
   };
 };
+
+export const savedProductsToggle = () => {
+  return {
+    type: constants.CONFIGURATOR_SAVED_PRODUCTS_TOGGLE
+  };
+};
+
+export const savedProductsOpen = () => {
+  return {
+    type: constants.CONFIGURATOR_SAVED_PRODUCTS_OPEN
+  };
+};
+
+export const changeActiveItems = items => {
+  return {
+    type: constants.CONFIGURATOR_CHANGE_ACTIVE_ITEMS,
+    payload: {
+      items
+    }
+  };
+};

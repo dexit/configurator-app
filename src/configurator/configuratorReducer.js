@@ -74,10 +74,37 @@ const initialState = {
       ]
     }
   ],
+  savedProductsModal: false,
   userSettings: {
     activeCategory: '',
     summaryOpen: false,
     activeItems: null,
+    savedProducts: [
+      {
+        img: '',
+        productParts: {
+          model: 1,
+          'kolor-dodatkow': 2,
+          'kolor-rekawkow': 5
+        }
+      },
+      {
+        img: '',
+        productParts: {
+          model: 1,
+          'kolor-dodatkow': 3,
+          'kolor-rekawkow': 4
+        }
+      },
+      {
+        img: '',
+        productParts: {
+          model: 0,
+          'kolor-dodatkow': 3,
+          'kolor-rekawkow': 4
+        }
+      }
+    ],
     ...settingsLocalStorage
   }
 };
@@ -195,6 +222,32 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userSettings: userSettingsSummaryOpen
+      };
+    case constants.CONFIGURATOR_SAVED_PRODUCTS_TOGGLE:
+      return {
+        ...state,
+        savedProductsModal: !state.savedProductsModal
+      };
+    case constants.CONFIGURATOR_SAVED_PRODUCTS_OPEN:
+      return {
+        ...state,
+        savedProductsModal: true
+      };
+    case constants.CONFIGURATOR_CHANGE_ACTIVE_ITEMS:
+      const userSettingsNewItems = {
+        ...state.userSettings,
+        activeItems: action.payload.items
+      };
+
+      localStorage.setItem(
+        'userSettings',
+        JSON.stringify(userSettingsNewItems)
+      );
+
+      return {
+        ...state,
+        userSettings: userSettingsNewItems,
+        savedProductsModal: false
       };
     default:
       return state;
