@@ -11,9 +11,13 @@ class SavedProducts extends Component {
     this.props.setActiveItems();
   };
 
-  handleAddProductClick = () => {};
+  handleAddProductClick = () => {
+    this.props.addProduct();
+  };
 
-  handleRemoveProductClick = () => {};
+  handleRemoveProductClick = index => {
+    this.props.removeProduct(index);
+  };
 
   render() {
     const modal = this.props.configuratorStore.savedProductsModal;
@@ -24,7 +28,7 @@ class SavedProducts extends Component {
       <div className={styles.itemWrapper} key={index}>
         <button
           className={styles.btnRemove}
-          onClick={this.handleRemoveProductClick}
+          onClick={this.handleRemoveProductClick.bind(this, index)}
         >
           Usuń
         </button>
@@ -37,9 +41,13 @@ class SavedProducts extends Component {
       </div>
     ));
 
-    const btnAddProduct = (
-      <button onClick={this.handleAddProductClick}>Zapisz</button>
-    );
+    const btnAddProduct = () => {
+      if (this.props.configuratorStore.userSettings.savedProducts.length < 8) {
+        return <button onClick={this.handleAddProductClick}>Dodaj nowy</button>;
+      }
+
+      return null;
+    };
 
     return (
       <div>
@@ -54,7 +62,7 @@ class SavedProducts extends Component {
           </ModalHeader>
           <ModalBody>
             {savedProductsList}
-            {btnAddProduct}
+            {btnAddProduct()}
           </ModalBody>
         </Modal>
       </div>
@@ -72,7 +80,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.savedProductsToggle()),
     changeActiveItems: items =>
       dispatch(configuratorActions.changeActiveItems(items)),
-    setActiveItems: () => dispatch(configuratorActions.setActiveItems())
+    setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
+    removeProduct: index => dispatch(configuratorActions.removeProduct(index)),
+    addProduct: () => dispatch(configuratorActions.addProduct())
   };
 };
 

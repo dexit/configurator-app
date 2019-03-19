@@ -57,3 +57,18 @@ export const changeActiveItems = items => {
     }
   };
 };
+
+export const removeProduct = index => {
+  return {
+    type: constants.CONFIGURATOR_REMOVE_PRODUCT,
+    payload: {
+      index
+    }
+  };
+};
+
+export const addProduct = () => {
+  return {
+    type: constants.CONFIGURATOR_ADD_PRODUCT
+  };
+};

@@ -249,6 +249,49 @@ export default (state = initialState, action) => {
         userSettings: userSettingsNewItems,
         savedProductsModal: false
       };
+    case constants.CONFIGURATOR_REMOVE_PRODUCT:
+      const index = action.payload.index;
+      let savedProductsRemove = [...state.userSettings.savedProducts];
+
+      savedProductsRemove.splice(index, 1);
+
+      const userSettingsRemoveProduct = {
+        ...state.userSettings,
+        savedProducts: savedProductsRemove
+      };
+
+      localStorage.setItem(
+        'userSettings',
+        JSON.stringify(userSettingsRemoveProduct)
+      );
+
+      return {
+        ...state,
+        userSettings: userSettingsRemoveProduct
+      };
+    case constants.CONFIGURATOR_ADD_PRODUCT:
+      let savedProductsAdd = [...state.userSettings.savedProducts];
+      const newProduct = {
+        img: '',
+        productParts: state.userSettings.activeItems
+      };
+
+      savedProductsAdd.push(newProduct);
+
+      const userSettingsAddProduct = {
+        ...state.userSettings,
+        savedProducts: savedProductsAdd
+      };
+
+      localStorage.setItem(
+        'userSettings',
+        JSON.stringify(userSettingsAddProduct)
+      );
+
+      return {
+        ...state,
+        userSettings: userSettingsAddProduct
+      };
     default:
       return state;
   }
