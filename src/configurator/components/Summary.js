@@ -7,6 +7,14 @@ import styles from './Summary.module.scss';
 import SavedProducts from './SavedProducts';
 
 class Summary extends Component {
+  handleOpenProductsClick = () => {
+    this.props.openSavedProducts();
+  };
+
+  handleSaveProductImgClick = () => {
+    this.saveProductImg();
+  };
+
   render() {
     return (
       <div className={styles.wrapper}>
@@ -14,9 +22,17 @@ class Summary extends Component {
           <div className="col-md-6 p-4 d-flex justify-content-center align-content-center">
             <button
               className={`${styles.item}`}
-              onClick={this.props.savedProductsOpen}
+              onClick={this.handleOpenProductsClick}
             >
               Zapisane produkty
+            </button>
+          </div>
+          <div className="col-md-6 p-4 d-flex justify-content-center align-content-center">
+            <button
+              className={`${styles.item}`}
+              onClick={this.handleSaveProductImgClick}
+            >
+              Zapisz produkt jako obrazek
             </button>
           </div>
         </div>
@@ -32,7 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    savedProductsOpen: () => dispatch(configuratorActions.savedProductsOpen())
+    openSavedProducts: () => dispatch(configuratorActions.openSavedProducts()),
+    saveProductImg: () => dispatch(configuratorActions.saveProductImg())
   };
 };
 

@@ -79,32 +79,7 @@ const initialState = {
     activeCategory: '',
     summaryOpen: false,
     activeItems: null,
-    savedProducts: [
-      {
-        img: '',
-        productParts: {
-          model: 1,
-          'kolor-dodatkow': 2,
-          'kolor-rekawkow': 5
-        }
-      },
-      {
-        img: '',
-        productParts: {
-          model: 1,
-          'kolor-dodatkow': 3,
-          'kolor-rekawkow': 4
-        }
-      },
-      {
-        img: '',
-        productParts: {
-          model: 0,
-          'kolor-dodatkow': 3,
-          'kolor-rekawkow': 4
-        }
-      }
-    ],
+    savedProducts: [],
     ...settingsLocalStorage
   }
 };
@@ -228,7 +203,7 @@ export default (state = initialState, action) => {
         ...state,
         savedProductsModal: !state.savedProductsModal
       };
-    case constants.CONFIGURATOR_SAVED_PRODUCTS_OPEN:
+    case constants.CONFIGURATOR_OPEN_SAVED_PRODUCTS:
       return {
         ...state,
         savedProductsModal: true
@@ -291,6 +266,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userSettings: userSettingsAddProduct
+      };
+    case constants.CONFIGURATOR_SAVE_PRODUCT_IMG:
+      return {
+        ...state
       };
     default:
       return state;

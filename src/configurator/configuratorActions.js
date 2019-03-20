@@ -43,9 +43,9 @@ export const savedProductsToggle = () => {
   };
 };
 
-export const savedProductsOpen = () => {
+export const openSavedProducts = () => {
   return {
-    type: constants.CONFIGURATOR_SAVED_PRODUCTS_OPEN
+    type: constants.CONFIGURATOR_OPEN_SAVED_PRODUCTS
   };
 };
 
@@ -73,5 +73,11 @@ export const addProduct = img => {
     payload: {
       img
     }
+  };
+};
+
+export const saveProductImg = () => {
+  return {
+    type: constants.CONFIGURATOR_SAVE_PRODUCT_IMG
   };
 };
