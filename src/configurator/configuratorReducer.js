@@ -272,7 +272,7 @@ export default (state = initialState, action) => {
     case constants.CONFIGURATOR_ADD_PRODUCT:
       let savedProductsAdd = [...state.userSettings.savedProducts];
       const newProduct = {
-        img: '',
+        img: action.payload.img,
         productParts: state.userSettings.activeItems
       };
 

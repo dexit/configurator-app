@@ -67,8 +67,11 @@ export const removeProduct = index => {
   };
 };
 
-export const addProduct = () => {
+export const addProduct = img => {
   return {
-    type: constants.CONFIGURATOR_ADD_PRODUCT
+    type: constants.CONFIGURATOR_ADD_PRODUCT,
+    payload: {
+      img
+    }
   };
 };

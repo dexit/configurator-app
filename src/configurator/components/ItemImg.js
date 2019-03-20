@@ -28,6 +28,7 @@ class ItemImg extends Component {
       <div
         className={styles.bg}
         style={{ backgroundImage: 'url(./img/product-bg.jpg)' }}
+        id="product"
       >
         <img src="./img/transparent-bg.png" alt="" className="img-fluid" />
         {images}

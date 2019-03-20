@@ -5,6 +5,9 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import styles from './SavedProducts.module.scss';
 
+import html2canvas from 'html2canvas';
+import imageResize from '../../utils/imageResize';
+
 class SavedProducts extends Component {
   handleProductClick = items => {
     this.props.changeActiveItems(items);
@@ -12,7 +15,13 @@ class SavedProducts extends Component {
   };
 
   handleAddProductClick = () => {
-    this.props.addProduct();
+    html2canvas(document.querySelector('#product')).then(canvas => {
+      const imgUrl = canvas.toDataURL('image/jpeg');
+
+      const imgResized = imageResize(imgUrl, 186, 124);
+
+      this.props.addProduct(imgResized);
+    });
   };
 
   handleRemoveProductClick = index => {
@@ -36,7 +45,7 @@ class SavedProducts extends Component {
           className={styles.btnChange}
           onClick={this.handleProductClick.bind(this, item.productParts)}
         >
-          Produkt {index} <br />
+          <img src={item.img} alt="" />
         </button>
       </div>
     ));
@@ -82,7 +91,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.changeActiveItems(items)),
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
     removeProduct: index => dispatch(configuratorActions.removeProduct(index)),
-    addProduct: () => dispatch(configuratorActions.addProduct())
+    addProduct: img => dispatch(configuratorActions.addProduct(img))
   };
 };
 
