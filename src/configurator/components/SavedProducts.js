@@ -15,12 +15,14 @@ class SavedProducts extends Component {
   };
 
   handleAddProductClick = () => {
-    html2canvas(document.querySelector('#product')).then(canvas => {
+    html2canvas(document.querySelector('#product'), {
+      logging: false
+    }).then(canvas => {
       const imgUrl = canvas.toDataURL('image/jpeg');
 
-      const imgResized = imageResize(imgUrl, 186, 124);
-
-      this.props.addProduct(imgResized);
+      imageResize(imgUrl, 186, 124).then(imgResized => {
+        this.props.addProduct(imgResized);
+      });
     });
   };
 
