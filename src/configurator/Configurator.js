@@ -59,8 +59,9 @@ class Configurator extends Component {
   }
 
   componentDidMount() {
-    this.setDefaultCategory();
     this.setDefaultItems();
+    this.setDefaultCategory();
+    this.props.updateActiveCategoryObject();
   }
 
   getDefaultCategory() {
@@ -120,7 +121,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.setActiveCategory(categorySlug)),
     setDefaultActiveItems: () =>
       dispatch(configuratorActions.setDefaultActiveItems()),
-    setActiveItems: () => dispatch(configuratorActions.setActiveItems())
+    setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
+    updateActiveCategoryObject: () =>
+      dispatch(configuratorActions.updateActiveCategoryObject())
   };
 };
 

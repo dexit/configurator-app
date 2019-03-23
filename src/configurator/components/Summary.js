@@ -12,7 +12,7 @@ class Summary extends Component {
   };
 
   handleSaveProductImgClick = () => {
-    this.saveProductImg();
+    // this.saveProductImg();
   };
 
   render() {

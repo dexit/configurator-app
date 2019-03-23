@@ -8,15 +8,7 @@ import ItemsList from './ItemsList';
 
 class MenuItems extends Component {
   render() {
-    const configuratorStore = this.props.configuratorStore;
-    const categories = configuratorStore.categories;
-    const activeCategorySlug =
-      configuratorStore.userSettings.activeCategorySlug;
-    const activeCategoryIndex = categories.findIndex(
-      category => category.slug === activeCategorySlug
-    );
-    const activeCategoryName =
-      activeCategoryIndex > -1 ? categories[activeCategoryIndex].name : null;
+    const activeCategoryName = this.props.configuratorStore.activeCategory.name;
 
     return (
       <div className={styles.wrapper}>

@@ -8,22 +8,16 @@ class ItemsList extends Component {
   handleClick = (activeCategorySlug, itemId) => {
     this.props.saveActiveItemUserSettings(activeCategorySlug, itemId);
     this.props.setActiveItems();
+    this.props.updateActiveCategoryObject();
   };
 
   list() {
-    const configuratorStore = this.props.configuratorStore;
-    const categories = configuratorStore.categories;
-    const activeCategorySlug =
-      configuratorStore.userSettings.activeCategorySlug;
-    const activeCategoryIndex = categories.findIndex(
-      category => category.slug === activeCategorySlug
-    );
-    const activeItemsState = configuratorStore.userSettings.activeItems;
+    const activeCategory = this.props.configuratorStore.activeCategory;
 
     let list = [];
 
-    if (activeCategoryIndex > -1 && activeItemsState !== null) {
-      list = categories[activeCategoryIndex].items.map(item => {
+    if (activeCategory.id !== undefined) {
+      list = activeCategory.items.map(item => {
         const activeItemClass = () => item.active && styles.active;
 
         return (
@@ -33,7 +27,11 @@ class ItemsList extends Component {
           >
             <button
               className={`${styles.item} ${activeItemClass()}`}
-              onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
+              onClick={this.handleClick.bind(
+                this,
+                activeCategory.slug,
+                item.id
+              )}
             >
               <img
                 src="/img/simple-model.png"
@@ -69,7 +67,9 @@ const mapDispatchToProps = dispatch => {
           activeCategorySlug,
           itemId
         )
-      )
+      ),
+    updateActiveCategoryObject: () =>
+      dispatch(configuratorActions.updateActiveCategoryObject())
   };
 };
 

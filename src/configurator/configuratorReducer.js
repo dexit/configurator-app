@@ -186,6 +186,14 @@ export default (state = initialState, action) => {
         ...state,
         userSettings: userSettingsActiveCategory
       };
+    case constants.CONFIGURATOR_UPDATE_ACTIVE_CATEGORY_OBJECT:
+      const activeCategoryIndex = state.categories.findIndex(
+        category => category.slug === state.userSettings.activeCategorySlug
+      );
+      const activeCategory =
+        activeCategoryIndex > -1 && state.categories[activeCategoryIndex];
+
+      return { ...state, activeCategory };
     case constants.CONFIGURATOR_SAVED_PRODUCTS_TOGGLE:
       return {
         ...state,

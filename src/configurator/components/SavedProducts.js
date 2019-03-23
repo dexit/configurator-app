@@ -12,6 +12,7 @@ class SavedProducts extends Component {
   handleProductClick = items => {
     this.props.changeActiveItems(items);
     this.props.setActiveItems();
+    this.props.updateActiveCategoryObject();
   };
 
   handleAddProductClick = () => {
@@ -93,7 +94,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.changeActiveItems(items)),
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
     removeProduct: index => dispatch(configuratorActions.removeProduct(index)),
-    addProduct: img => dispatch(configuratorActions.addProduct(img))
+    addProduct: img => dispatch(configuratorActions.addProduct(img)),
+    updateActiveCategoryObject: () =>
+      dispatch(configuratorActions.updateActiveCategoryObject())
   };
 };
 

@@ -75,3 +75,9 @@ export const saveProductImg = () => {
     type: constants.CONFIGURATOR_SAVE_PRODUCT_IMG
   };
 };
+
+export const updateActiveCategoryObject = () => {
+  return {
+    type: constants.CONFIGURATOR_UPDATE_ACTIVE_CATEGORY_OBJECT
+  };
+};
