@@ -10,31 +10,42 @@ import MenuItems from './components/MenuItems';
 import ItemImg from './components/ItemImg';
 import Summary from './components/Summary';
 
-import { categoryName, summaryName } from '../app/App';
+import { routeCategoryName, routeSummaryName } from '../app/App';
 
 class Configurator extends Component {
   setDefaultCategory() {
+    const matchCategorySlug = this.props.match.params.category;
+    const activeCategorySlug = this.props.configuratorStore.userSettings
+      .activeCategorySlug;
+    const matchCategoryExist =
+      this.props.configuratorStore.categories.findIndex(
+        category => category.slug === matchCategorySlug
+      ) > -1
+        ? true
+        : false;
+
     let firstCategory = '';
 
     if (this.props.configuratorStore.categories.length) {
       firstCategory = this.props.configuratorStore.categories[0].slug;
     }
 
-    const matchCategory = this.props.match.params.category;
-    const activeCategory = this.props.configuratorStore.userSettings
-      .activeCategory;
-
     const setCategory = () => {
-      if (matchCategory) {
-        this.props.setActiveCategory(matchCategory);
-      } else {
+      if (matchCategorySlug) {
+        if (matchCategoryExist) {
+          this.props.setActiveCategory(matchCategorySlug);
+        } else {
+          this.props.setActiveCategory(firstCategory);
+          this.props.history.replace(
+            '/' + routeCategoryName + '/' + firstCategory
+          );
+        }
+      } else if (!activeCategorySlug) {
         this.props.setActiveCategory(firstCategory);
       }
     };
 
-    if (!activeCategory) {
-      setCategory();
-    }
+    setCategory();
   }
 
   setDefaultItems() {
@@ -53,16 +64,16 @@ class Configurator extends Component {
   }
 
   getDefaultCategory() {
-    const activeCategory = this.props.configuratorStore.userSettings
-      .activeCategory;
+    const activeCategorySlug = this.props.configuratorStore.userSettings
+      .activeCategorySlug;
     let firstCategory = '';
 
     if (this.props.configuratorStore.categories.length) {
       firstCategory = this.props.configuratorStore.categories[0].slug;
     }
 
-    if (activeCategory) {
-      return activeCategory;
+    if (activeCategorySlug) {
+      return activeCategorySlug;
     } else {
       return firstCategory;
     }
@@ -81,12 +92,12 @@ class Configurator extends Component {
           <div className="col-md-3">
             <Switch>
               <Route
-                path={'/' + categoryName + '/:category'}
+                path={'/' + routeCategoryName + '/:category'}
                 component={MenuItems}
               />
-              <Route path={'/' + summaryName} component={Summary} />
+              <Route path={'/' + routeSummaryName} component={Summary} />
               <Redirect
-                to={'/' + categoryName + '/' + this.getDefaultCategory()}
+                to={'/' + routeCategoryName + '/' + this.getDefaultCategory()}
               />
             </Switch>
           </div>

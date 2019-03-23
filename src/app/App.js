@@ -5,8 +5,8 @@ import store from '../store/store';
 
 import Configurator from '../configurator/Configurator';
 
-export const categoryName = 'kategoria';
-export const summaryName = 'gotowe';
+export const routeCategoryName = 'kategoria';
+export const routeSummaryName = 'gotowe';
 
 class App extends Component {
   render() {
@@ -15,10 +15,10 @@ class App extends Component {
         <Router>
           <Switch>
             <Route
-              path={'/' + categoryName + '/:category'}
+              path={'/' + routeCategoryName + '/:category'}
               component={Configurator}
             />
-            <Route path={'/' + summaryName} component={Configurator} />
+            <Route path={'/' + routeSummaryName} component={Configurator} />
             <Route path="/" component={Configurator} />
           </Switch>
         </Router>

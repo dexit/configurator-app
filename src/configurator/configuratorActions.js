@@ -12,9 +12,9 @@ export const setActiveItems = () => {
   };
 };
 
-export const setActiveItemUserSettings = (activeCategorySlug, itemId) => {
+export const saveActiveItemUserSettings = (activeCategorySlug, itemId) => {
   return {
-    type: constants.CONFIGURATOR_SET_ACTIVE_ITEM_USER_SETTINGS,
+    type: constants.CONFIGURATOR_SAVE_ACTIVE_ITEM_USER_SETTINGS,
     payload: {
       activeCategorySlug,
       itemId

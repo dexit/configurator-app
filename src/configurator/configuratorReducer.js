@@ -74,9 +74,10 @@ const initialState = {
       ]
     }
   ],
+  activeCategory: {},
   savedProductsModal: false,
   userSettings: {
-    activeCategory: '',
+    activeCategorySlug: '',
     activeItems: null,
     savedProducts: [],
     ...settingsLocalStorage
@@ -86,18 +87,20 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case constants.CONFIGURATOR_SET_DEFAULT_ACTIVE_ITEMS:
-      const defaultActiveItems = [...state.categories]
-        .map(item => {
-          return {
-            [item.slug]: item.items[0].id
-          };
-        })
-        .reduce((obj1, obj2) => {
-          return {
-            ...obj1,
-            ...obj2
-          };
-        });
+      const defaultActiveItems =
+        state.categories.length > 0 &&
+        [...state.categories]
+          .map(item => {
+            return {
+              [item.slug]: item.items[0].id
+            };
+          })
+          .reduce((obj1, obj2) => {
+            return {
+              ...obj1,
+              ...obj2
+            };
+          });
 
       const userSettingsDefaultItems = {
         ...state.userSettings,
@@ -142,7 +145,7 @@ export default (state = initialState, action) => {
       });
 
       return { ...state, categories };
-    case constants.CONFIGURATOR_SET_ACTIVE_ITEM_USER_SETTINGS:
+    case constants.CONFIGURATOR_SAVE_ACTIVE_ITEM_USER_SETTINGS:
       const activeItems = {
         ...state.userSettings.activeItems,
         [action.payload.activeCategorySlug]: action.payload.itemId
@@ -163,13 +166,15 @@ export default (state = initialState, action) => {
         userSettings: userSettingsActiveItems
       };
     case constants.CONFIGURATOR_SET_ACTIVE_CATEGORY:
-      const activeCategory = action.payload.categorySlug
+      const firstCategorySlug =
+        state.categories.length > 0 && state.categories[0].slug;
+      const activeCategorySlug = action.payload.categorySlug
         ? action.payload.categorySlug
-        : state.categories[0].slug;
+        : firstCategorySlug;
 
       const userSettingsActiveCategory = {
         ...state.userSettings,
-        activeCategory
+        activeCategorySlug
       };
 
       localStorage.setItem(

@@ -6,7 +6,7 @@ import styles from './Menu.module.scss';
 
 import { NavLink, withRouter } from 'react-router-dom';
 
-import { categoryName, summaryName } from '../../app/App';
+import { routeCategoryName, routeSummaryName } from '../../app/App';
 
 class Menu extends Component {
   handleCategoryClick = categorySlug => {
@@ -19,7 +19,7 @@ class Menu extends Component {
     const menu = configuratorStore.categories.map(item => {
       return (
         <NavLink
-          to={'/' + categoryName + '/' + item.slug}
+          to={'/' + routeCategoryName + '/' + item.slug}
           key={item.id}
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
@@ -32,7 +32,7 @@ class Menu extends Component {
 
     const summary = (
       <NavLink
-        to={'/' + summaryName}
+        to={'/' + routeSummaryName}
         className={`d-block px-5 py-3 ${styles.link}`}
         activeClassName={styles.active}
       >
