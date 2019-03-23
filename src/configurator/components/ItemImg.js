@@ -27,10 +27,10 @@ class ItemImg extends Component {
     return (
       <div
         className={styles.bg}
-        style={{ backgroundImage: 'url(./img/product-bg.jpg)' }}
+        style={{ backgroundImage: 'url(/img/product-bg.jpg)' }}
         id="product"
       >
-        <img src="./img/transparent-bg.png" alt="" className="img-fluid" />
+        <img src="/img/transparent-bg.png" alt="" className="img-fluid" />
         {images}
       </div>
     );
