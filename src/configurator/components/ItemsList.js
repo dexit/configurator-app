@@ -35,7 +35,7 @@ class ItemsList extends Component {
               onClick={this.handleClick.bind(this, activeCategorySlug, item.id)}
             >
               <img
-                src="./img/simple-model.png"
+                src="/img/simple-model.png"
                 alt=""
                 className={styles.simpleModel}
               />

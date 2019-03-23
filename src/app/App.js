@@ -5,13 +5,20 @@ import store from '../store/store';
 
 import Configurator from '../configurator/Configurator';
 
+export const categoryName = 'kategoria';
+export const summaryName = 'gotowe';
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route path="/:category" component={Configurator} />
+            <Route
+              path={'/' + categoryName + '/:category'}
+              component={Configurator}
+            />
+            <Route path={'/' + summaryName} component={Configurator} />
             <Route path="/" component={Configurator} />
           </Switch>
         </Router>

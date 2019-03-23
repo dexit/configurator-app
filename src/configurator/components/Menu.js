@@ -4,32 +4,25 @@ import * as configuratorActions from '../configuratorActions';
 
 import styles from './Menu.module.scss';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+
+import { categoryName, summaryName } from '../../app/App';
 
 class Menu extends Component {
   handleCategoryClick = categorySlug => {
     this.props.setActiveCategory(categorySlug);
   };
 
-  handleSummaryClick = () => {
-    this.props.openSummary();
-  };
-
   render() {
     const configuratorStore = this.props.configuratorStore;
-    const userSettings = configuratorStore.userSettings;
 
     const menu = configuratorStore.categories.map(item => {
       return (
         <NavLink
-          to={'/' + item.slug}
+          to={'/' + categoryName + '/' + item.slug}
           key={item.id}
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
-          isActive={() =>
-            item.slug === userSettings.activeCategory &&
-            userSettings.summaryOpen === false
-          }
           onClick={this.handleCategoryClick.bind(this, item.slug)}
         >
           {item.name}
@@ -39,11 +32,9 @@ class Menu extends Component {
 
     const summary = (
       <NavLink
-        to={'/gotowe'}
+        to={'/' + summaryName}
         className={`d-block px-5 py-3 ${styles.link}`}
         activeClassName={styles.active}
-        isActive={() => userSettings.summaryOpen === true}
-        onClick={this.handleSummaryClick}
       >
         Gotowe
       </NavLink>
@@ -65,12 +56,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug)),
-    openSummary: () => dispatch(configuratorActions.openSummary())
+      dispatch(configuratorActions.setActiveCategory(categorySlug))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Menu)
+);

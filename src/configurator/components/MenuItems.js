@@ -25,13 +25,7 @@ class MenuItems extends Component {
           </div>
         ) : null}
         <div className="row">
-          {activeCategoryIndex > -1 ? (
-            <ItemsList />
-          ) : (
-            <div className="col text-center py-5">
-              <p>Wybierz kategorię</p>
-            </div>
-          )}
+          <ItemsList />
         </div>
       </div>
     );

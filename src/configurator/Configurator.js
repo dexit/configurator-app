@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from './configuratorActions';
-import { withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import styles from './Configurator.module.scss';
 
@@ -10,18 +10,10 @@ import MenuItems from './components/MenuItems';
 import ItemImg from './components/ItemImg';
 import Summary from './components/Summary';
 
+import { categoryName, summaryName } from '../app/App';
+
 class Configurator extends Component {
-  setCategoryUrlIfEmpty() {
-    const matchCategory = this.props.match.params.category;
-    const activeCategory = this.props.configuratorStore.userSettings
-      .activeCategory;
-
-    if (!matchCategory) {
-      this.props.history.replace(activeCategory);
-    }
-  }
-
-  loadSettings() {
+  setDefaultCategory() {
     let firstCategory = '';
 
     if (this.props.configuratorStore.categories.length) {
@@ -35,10 +27,8 @@ class Configurator extends Component {
     const setCategory = () => {
       if (matchCategory) {
         this.props.setActiveCategory(matchCategory);
-        this.props.history.replace(matchCategory);
       } else {
         this.props.setActiveCategory(firstCategory);
-        this.props.history.replace(firstCategory);
       }
     };
 
@@ -47,35 +37,7 @@ class Configurator extends Component {
     }
   }
 
-  updateCategoryFromUrl() {
-    const matchCategory = this.props.match.params.category;
-    const activeCategory = this.props.configuratorStore.userSettings
-      .activeCategory;
-    const categories = this.props.configuratorStore.categories;
-    const firstCategory = categories[0].slug;
-    const summaryOpen = this.props.configuratorStore.userSettings.summaryOpen;
-
-    if (matchCategory && matchCategory !== activeCategory && !summaryOpen) {
-      this.props.setActiveCategory(matchCategory);
-    } else if (summaryOpen === true) {
-      this.props.history.replace('gotowe');
-    }
-
-    const matchCategoryExist = categories.findIndex(
-      item => item.slug === matchCategory
-    );
-
-    if (matchCategoryExist === -1 && !summaryOpen) {
-      this.props.setActiveCategory(firstCategory);
-      this.props.history.replace(firstCategory);
-    }
-  }
-
-  componentDidMount() {
-    this.loadSettings();
-    this.setCategoryUrlIfEmpty();
-    this.updateCategoryFromUrl();
-
+  setDefaultItems() {
     const activeItems = this.props.configuratorStore.userSettings.activeItems;
 
     if (activeItems === null) {
@@ -83,6 +45,27 @@ class Configurator extends Component {
     }
 
     this.props.setActiveItems();
+  }
+
+  componentDidMount() {
+    this.setDefaultCategory();
+    this.setDefaultItems();
+  }
+
+  getDefaultCategory() {
+    const activeCategory = this.props.configuratorStore.userSettings
+      .activeCategory;
+    let firstCategory = '';
+
+    if (this.props.configuratorStore.categories.length) {
+      firstCategory = this.props.configuratorStore.categories[0].slug;
+    }
+
+    if (activeCategory) {
+      return activeCategory;
+    } else {
+      return firstCategory;
+    }
   }
 
   render() {
@@ -96,11 +79,16 @@ class Configurator extends Component {
             <Menu />
           </div>
           <div className="col-md-3">
-            {this.props.match.params.category === 'gotowe' ? (
-              <Summary />
-            ) : (
-              <MenuItems />
-            )}
+            <Switch>
+              <Route
+                path={'/' + categoryName + '/:category'}
+                component={MenuItems}
+              />
+              <Route path={'/' + summaryName} component={Summary} />
+              <Redirect
+                to={'/' + categoryName + '/' + this.getDefaultCategory()}
+              />
+            </Switch>
           </div>
           <div className="col-md-7">
             <ItemImg />
@@ -125,9 +113,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Configurator)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Configurator);

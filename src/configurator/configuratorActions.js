@@ -31,12 +31,6 @@ export const setActiveCategory = categorySlug => {
   };
 };
 
-export const openSummary = () => {
-  return {
-    type: constants.CONFIGURATOR_OPEN_SUMMARY
-  };
-};
-
 export const savedProductsToggle = () => {
   return {
     type: constants.CONFIGURATOR_SAVED_PRODUCTS_TOGGLE

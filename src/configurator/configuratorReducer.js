@@ -12,16 +12,16 @@ const initialState = {
         {
           id: 0,
           name: 'model 1',
-          imgThumb: './img/model-1.png',
-          imgLarge: './img/model-1.png',
+          imgThumb: '/img/model-1.png',
+          imgLarge: '/img/model-1.png',
           indexCss: 0,
           active: false
         },
         {
           id: 1,
           name: 'model 2',
-          imgThumb: './img/model-2.png',
-          imgLarge: './img/model-2.png',
+          imgThumb: '/img/model-2.png',
+          imgLarge: '/img/model-2.png',
           indexCss: 0,
           active: false
         }
@@ -35,16 +35,16 @@ const initialState = {
         {
           id: 2,
           name: 'dodatek 1',
-          imgThumb: './img/dodatki-1.png',
-          imgLarge: './img/dodatki-1.png',
+          imgThumb: '/img/dodatki-1.png',
+          imgLarge: '/img/dodatki-1.png',
           indexCss: 1,
           active: false
         },
         {
           id: 3,
           name: 'dodatek 2',
-          imgThumb: './img/dodatki-2.png',
-          imgLarge: './img/dodatki-2.png',
+          imgThumb: '/img/dodatki-2.png',
+          imgLarge: '/img/dodatki-2.png',
           indexCss: 1,
           active: false
         }
@@ -58,16 +58,16 @@ const initialState = {
         {
           id: 4,
           name: 'kolor 1',
-          imgThumb: './img/rekawki-1.png',
-          imgLarge: './img/rekawki-1.png',
+          imgThumb: '/img/rekawki-1.png',
+          imgLarge: '/img/rekawki-1.png',
           indexCss: 1,
           active: false
         },
         {
           id: 5,
           name: 'kolor 2',
-          imgThumb: './img/rekawki-2.png',
-          imgLarge: './img/rekawki-2.png',
+          imgThumb: '/img/rekawki-2.png',
+          imgLarge: '/img/rekawki-2.png',
           indexCss: 1,
           active: false
         }
@@ -77,7 +77,6 @@ const initialState = {
   savedProductsModal: false,
   userSettings: {
     activeCategory: '',
-    summaryOpen: false,
     activeItems: null,
     savedProducts: [],
     ...settingsLocalStorage
@@ -170,8 +169,7 @@ export default (state = initialState, action) => {
 
       const userSettingsActiveCategory = {
         ...state.userSettings,
-        activeCategory,
-        summaryOpen: false
+        activeCategory
       };
 
       localStorage.setItem(
@@ -182,21 +180,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userSettings: userSettingsActiveCategory
-      };
-    case constants.CONFIGURATOR_OPEN_SUMMARY:
-      const userSettingsSummaryOpen = {
-        ...state.userSettings,
-        summaryOpen: true
-      };
-
-      localStorage.setItem(
-        'userSettings',
-        JSON.stringify(userSettingsSummaryOpen)
-      );
-
-      return {
-        ...state,
-        userSettings: userSettingsSummaryOpen
       };
     case constants.CONFIGURATOR_SAVED_PRODUCTS_TOGGLE:
       return {
