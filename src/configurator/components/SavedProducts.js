@@ -52,28 +52,20 @@ class SavedProducts extends Component {
       </div>
     ));
 
-    const btnAddProduct = () => {
-      if (this.props.configuratorStore.userSettings.savedProducts.length < 8) {
-        return <button onClick={this.handleAddProductClick}>Dodaj nowy</button>;
-      }
-
-      return null;
-    };
-
     return (
       <div>
         <Modal
           isOpen={modal}
           toggle={this.props.savedProductsToggle}
-          className={this.props.className}
+          className={styles.modal}
           centered={true}
         >
           <ModalHeader toggle={this.props.savedProductsToggle}>
             Zapisane produkty
           </ModalHeader>
           <ModalBody>
+            <button onClick={this.handleAddProductClick}>Dodaj nowy</button>
             {savedProductsList}
-            {btnAddProduct()}
           </ModalBody>
         </Modal>
       </div>

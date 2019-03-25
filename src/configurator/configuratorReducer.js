@@ -245,7 +245,7 @@ export default (state = initialState, action) => {
         productParts: state.userSettings.activeItems
       };
 
-      savedProductsAdd.push(newProduct);
+      savedProductsAdd = [newProduct, ...savedProductsAdd];
 
       const userSettingsAddProduct = {
         ...state.userSettings,

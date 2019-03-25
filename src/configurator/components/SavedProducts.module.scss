@@ -1,6 +1,17 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
 .itemWrapper {
   display: inline-block;
   margin: 10px;
+}
+
+.modal {
+  @include media-breakpoint-up(md) {
+    max-width: none;
+    width: 80%;
+  }
 }
 
 .btnRemove {
