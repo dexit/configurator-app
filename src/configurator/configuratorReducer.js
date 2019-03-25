@@ -115,59 +115,63 @@ export default (state = initialState, action) => {
         userSettings: userSettingsDefaultItems
       };
     case constants.CONFIGURATOR_SET_ACTIVE_ITEMS:
-      const stateActiveItems = state.userSettings.activeItems;
-      const categories = state.categories.map(category => {
-        const activeItem = stateActiveItems[category.slug];
-        let items = [];
-        let activeItemExist = false;
+      let categories = [];
+      let userSettingsActiveItems = {};
 
-        items = category.items.map(item => {
-          if (item.id === activeItem) {
-            activeItemExist = true;
+      function saveActiveItemsUserSettings() {
+        const activeItems = {
+          ...state.userSettings.activeItems,
+          ...action.payload.items
+        };
+
+        userSettingsActiveItems = {
+          ...state.userSettings,
+          activeItems
+        };
+
+        localStorage.setItem(
+          'userSettings',
+          JSON.stringify(userSettingsActiveItems)
+        );
+      }
+
+      function setActiveItems() {
+        categories = state.categories.map(category => {
+          const activeItem = userSettingsActiveItems.activeItems[category.slug];
+          let items = [];
+          let activeItemExist = false;
+
+          items = category.items.map(item => {
+            if (item.id === activeItem) {
+              activeItemExist = true;
+
+              return {
+                ...item,
+                active: true
+              };
+            }
 
             return {
               ...item,
-              active: true
+              active: false
             };
+          });
+
+          if (!activeItemExist) {
+            items[0].active = true;
           }
 
           return {
-            ...item,
-            active: false
+            ...category,
+            items
           };
         });
+      }
 
-        if (!activeItemExist) {
-          items[0].active = true;
-        }
+      saveActiveItemsUserSettings();
+      setActiveItems();
 
-        return {
-          ...category,
-          items
-        };
-      });
-
-      return { ...state, categories };
-    case constants.CONFIGURATOR_SAVE_ACTIVE_ITEM_USER_SETTINGS:
-      const activeItems = {
-        ...state.userSettings.activeItems,
-        [action.payload.activeCategorySlug]: action.payload.itemId
-      };
-
-      const userSettingsActiveItems = {
-        ...state.userSettings,
-        activeItems
-      };
-
-      localStorage.setItem(
-        'userSettings',
-        JSON.stringify(userSettingsActiveItems)
-      );
-
-      return {
-        ...state,
-        userSettings: userSettingsActiveItems
-      };
+      return { ...state, userSettings: userSettingsActiveItems, categories };
     case constants.CONFIGURATOR_SET_ACTIVE_CATEGORY:
       const firstCategorySlug =
         state.categories.length > 0 && state.categories[0].slug;
@@ -213,22 +217,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         savedProductsModal: true
-      };
-    case constants.CONFIGURATOR_CHANGE_ACTIVE_ITEMS:
-      const userSettingsNewItems = {
-        ...state.userSettings,
-        activeItems: action.payload.items
-      };
-
-      localStorage.setItem(
-        'userSettings',
-        JSON.stringify(userSettingsNewItems)
-      );
-
-      return {
-        ...state,
-        userSettings: userSettingsNewItems,
-        savedProductsModal: false
       };
     case constants.CONFIGURATOR_REMOVE_PRODUCT:
       const index = action.payload.index;

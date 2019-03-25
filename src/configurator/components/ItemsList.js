@@ -6,8 +6,7 @@ import styles from './ItemsList.module.scss';
 
 class ItemsList extends Component {
   handleClick = (activeCategorySlug, itemId) => {
-    this.props.saveActiveItemUserSettings(activeCategorySlug, itemId);
-    this.props.setActiveItems();
+    this.props.setActiveItems({ [activeCategorySlug]: itemId });
   };
 
   list() {
@@ -61,14 +60,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
-    saveActiveItemUserSettings: (activeCategorySlug, itemId) =>
-      dispatch(
-        configuratorActions.saveActiveItemUserSettings(
-          activeCategorySlug,
-          itemId
-        )
-      )
+    setActiveItems: items => dispatch(configuratorActions.setActiveItems(items))
   };
 };
 

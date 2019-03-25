@@ -6,18 +6,11 @@ export const setDefaultActiveItems = () => {
   };
 };
 
-export const setActiveItems = () => {
+export const setActiveItems = items => {
   return {
-    type: constants.CONFIGURATOR_SET_ACTIVE_ITEMS
-  };
-};
-
-export const saveActiveItemUserSettings = (activeCategorySlug, itemId) => {
-  return {
-    type: constants.CONFIGURATOR_SAVE_ACTIVE_ITEM_USER_SETTINGS,
+    type: constants.CONFIGURATOR_SET_ACTIVE_ITEMS,
     payload: {
-      activeCategorySlug,
-      itemId
+      items
     }
   };
 };
@@ -40,15 +33,6 @@ export const savedProductsToggle = () => {
 export const openSavedProducts = () => {
   return {
     type: constants.CONFIGURATOR_OPEN_SAVED_PRODUCTS
-  };
-};
-
-export const changeActiveItems = items => {
-  return {
-    type: constants.CONFIGURATOR_CHANGE_ACTIVE_ITEMS,
-    payload: {
-      items
-    }
   };
 };
 

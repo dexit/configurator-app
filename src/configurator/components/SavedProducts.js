@@ -10,8 +10,8 @@ import imageResize from '../../utils/imageResize';
 
 class SavedProducts extends Component {
   handleProductClick = items => {
-    this.props.changeActiveItems(items);
-    this.props.setActiveItems();
+    this.props.setActiveItems(items);
+    this.props.savedProductsToggle();
   };
 
   handleAddProductClick = () => {
@@ -89,9 +89,8 @@ const mapDispatchToProps = dispatch => {
   return {
     savedProductsToggle: () =>
       dispatch(configuratorActions.savedProductsToggle()),
-    changeActiveItems: items =>
-      dispatch(configuratorActions.changeActiveItems(items)),
-    setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
+    setActiveItems: items =>
+      dispatch(configuratorActions.setActiveItems(items)),
     removeProduct: index => dispatch(configuratorActions.removeProduct(index)),
     addProduct: img => dispatch(configuratorActions.addProduct(img))
   };
