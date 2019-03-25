@@ -13,8 +13,27 @@ class SavedProducts extends Component {
     this.props.savedProductsToggle();
   };
 
-  handleAddProductClick = () => {
-    createProductThumb(this.props.addProduct);
+  handleAddProductClick = e => {
+    const savedProducts = this.props.configuratorStore.userSettings
+      .savedProducts;
+    const activeItems = this.props.configuratorStore.userSettings.activeItems;
+    const productExist =
+      savedProducts.findIndex(
+        item =>
+          JSON.stringify(item.productParts) === JSON.stringify(activeItems)
+      ) > -1
+        ? true
+        : false;
+
+    if (!productExist) {
+      createProductThumb(this.props.addProduct);
+    } else {
+      document.querySelector('#activeItem').style.visibility = 'hidden';
+
+      setTimeout(() => {
+        document.querySelector('#activeItem').style.visibility = 'visible';
+      }, 200);
+    }
   };
 
   handleRemoveProductClick = index => {
@@ -25,23 +44,36 @@ class SavedProducts extends Component {
     const modal = this.props.configuratorStore.savedProductsModal;
     const savedProducts = this.props.configuratorStore.userSettings
       .savedProducts;
+    const activeItems = this.props.configuratorStore.userSettings.activeItems;
 
-    const savedProductsList = savedProducts.map((item, index) => (
-      <div className={styles.itemWrapper} key={index}>
-        <button
-          className={styles.btnRemove}
-          onClick={this.handleRemoveProductClick.bind(this, index)}
+    const savedProductsList = savedProducts.map((item, index) => {
+      const productsAreEqual =
+        JSON.stringify(item.productParts) === JSON.stringify(activeItems);
+      const activeItemClass = productsAreEqual ? styles.active : undefined;
+      const activeItemWrapperId = productsAreEqual ? 'activeItem' : undefined;
+
+      return (
+        <div
+          className={styles.itemWrapper}
+          key={index}
+          id={activeItemWrapperId}
         >
-          Usuń
-        </button>
-        <button
-          className={styles.btnChange}
-          onClick={this.handleProductClick.bind(this, item.productParts)}
-        >
-          <img src={item.img} alt="" />
-        </button>
-      </div>
-    ));
+          <button
+            className={styles.btnRemove}
+            onClick={this.handleRemoveProductClick.bind(this, index)}
+          >
+            Usuń
+          </button>
+          <button
+            className={`${styles.btnChange} ${activeItemClass}`}
+            id={activeItemClass}
+            onClick={this.handleProductClick.bind(this, item.productParts)}
+          >
+            <img src={item.img} alt="" />
+          </button>
+        </div>
+      );
+    });
 
     return (
       <div>
