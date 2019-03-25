@@ -5,8 +5,7 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import styles from './SavedProducts.module.scss';
 
-import html2canvas from 'html2canvas';
-import imageResize from '../../utils/imageResize';
+import createProductThumb from '../../utils/createProductThumb';
 
 class SavedProducts extends Component {
   handleProductClick = items => {
@@ -15,15 +14,7 @@ class SavedProducts extends Component {
   };
 
   handleAddProductClick = () => {
-    html2canvas(document.querySelector('#product'), {
-      logging: false
-    }).then(canvas => {
-      const imgUrl = canvas.toDataURL('image/jpeg');
-
-      imageResize(imgUrl, 186, 124).then(imgResized => {
-        this.props.addProduct(imgResized);
-      });
-    });
+    createProductThumb(this.props.addProduct);
   };
 
   handleRemoveProductClick = index => {

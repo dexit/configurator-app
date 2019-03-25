@@ -9,6 +9,7 @@ import Menu from './components/Menu';
 import MenuItems from './components/MenuItems';
 import ItemImg from './components/ItemImg';
 import Summary from './components/Summary';
+import SavedProducts from './components/SavedProducts';
 
 import { routeCategoryName, routeSummaryName } from '../app/App';
 
@@ -81,31 +82,35 @@ class Configurator extends Component {
 
   render() {
     return (
-      <div className={`d-flex flex-column ${styles.wrapper}`}>
-        <header className="text-center text-uppercase my-5">
-          <h1>Konfigurator</h1>
-        </header>
-        <div className="row flex-grow-1">
-          <div className="col-md-2">
-            <Menu />
-          </div>
-          <div className="col-md-3">
-            <Switch>
-              <Route
-                path={'/' + routeCategoryName + '/:category'}
-                component={MenuItems}
-              />
-              <Route path={'/' + routeSummaryName} component={Summary} />
-              <Redirect
-                to={'/' + routeCategoryName + '/' + this.getDefaultCategory()}
-              />
-            </Switch>
-          </div>
-          <div className="col-md-7">
-            <ItemImg />
+      <>
+        <div className={`d-flex flex-column ${styles.wrapper}`}>
+          <header className="text-center text-uppercase my-5">
+            <h1>Konfigurator</h1>
+          </header>
+          <div className="row flex-grow-1">
+            <div className="col-md-2">
+              <Menu />
+            </div>
+            <div className="col-md-3">
+              <Switch>
+                <Route
+                  path={'/' + routeCategoryName + '/:category'}
+                  component={MenuItems}
+                />
+                <Route path={'/' + routeSummaryName} component={Summary} />
+                <Redirect
+                  to={'/' + routeCategoryName + '/' + this.getDefaultCategory()}
+                />
+              </Switch>
+            </div>
+            <div className="col-md-7">
+              <ItemImg />
+            </div>
           </div>
         </div>
-      </div>
+
+        <SavedProducts />
+      </>
     );
   }
 }

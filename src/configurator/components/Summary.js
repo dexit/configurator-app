@@ -4,8 +4,6 @@ import * as configuratorActions from '../configuratorActions';
 
 import styles from './Summary.module.scss';
 
-import SavedProducts from './SavedProducts';
-
 class Summary extends Component {
   handleOpenProductsClick = () => {
     this.props.openSavedProducts();
@@ -36,7 +34,6 @@ class Summary extends Component {
             </button>
           </div>
         </div>
-        <SavedProducts />
       </div>
     );
   }

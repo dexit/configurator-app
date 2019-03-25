@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as configuratorActions from '../configuratorActions';
 
 import styles from './ItemImg.module.scss';
 
+import createProductThumb from '../../utils/createProductThumb';
+
 class ItemImg extends Component {
+  handleAddClick = () => {
+    this.props.openSavedProducts();
+    createProductThumb(this.props.addProduct);
+  };
+
   render() {
     const categories = this.props.configuratorStore.categories;
 
@@ -32,6 +40,13 @@ class ItemImg extends Component {
       >
         <img src="/img/transparent-bg.png" alt="" className="img-fluid" />
         {images}
+        <button
+          className={styles.btnAdd}
+          id="btnAdd"
+          onClick={this.handleAddClick}
+        >
+          Dodaj produkt <br /> do ulubionych
+        </button>
       </div>
     );
   }
@@ -42,7 +57,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    openSavedProducts: () => dispatch(configuratorActions.openSavedProducts()),
+    addProduct: img => dispatch(configuratorActions.addProduct(img))
+  };
 };
 
 export default connect(
