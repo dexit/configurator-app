@@ -22,7 +22,7 @@ class Summary extends Component {
               className={`${styles.item}`}
               onClick={this.handleOpenProductsClick}
             >
-              Zapisane produkty
+              Ulubione produkty
             </button>
           </div>
           <div className="col-md-6 p-4 d-flex justify-content-center align-content-center">
