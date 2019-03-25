@@ -8,15 +8,16 @@ class ItemsList extends Component {
   handleClick = (activeCategorySlug, itemId) => {
     this.props.saveActiveItemUserSettings(activeCategorySlug, itemId);
     this.props.setActiveItems();
-    this.props.updateActiveCategoryObject();
   };
 
   list() {
-    const activeCategory = this.props.configuratorStore.activeCategory;
+    const activeCategory = this.props.configuratorStore.categories.filter(
+      category => category.active === true
+    )[0];
 
     let list = [];
 
-    if (activeCategory.id !== undefined) {
+    if (activeCategory) {
       list = activeCategory.items.map(item => {
         const activeItemClass = () => item.active && styles.active;
 
@@ -67,9 +68,7 @@ const mapDispatchToProps = dispatch => {
           activeCategorySlug,
           itemId
         )
-      ),
-    updateActiveCategoryObject: () =>
-      dispatch(configuratorActions.updateActiveCategoryObject())
+      )
   };
 };
 

@@ -8,7 +8,10 @@ import ItemsList from './ItemsList';
 
 class MenuItems extends Component {
   render() {
-    const activeCategoryName = this.props.configuratorStore.activeCategory.name;
+    const activeCategory = this.props.configuratorStore.categories.filter(
+      category => category.active === true
+    )[0];
+    const activeCategoryName = activeCategory && activeCategory.name;
 
     return (
       <div className={styles.wrapper}>

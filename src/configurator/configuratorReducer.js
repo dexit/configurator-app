@@ -8,6 +8,7 @@ const initialState = {
       id: 0,
       slug: 'model',
       name: 'Model',
+      active: false,
       items: [
         {
           id: 0,
@@ -31,6 +32,7 @@ const initialState = {
       id: 1,
       slug: 'kolor-dodatkow',
       name: 'Kolor dodatków',
+      active: false,
       items: [
         {
           id: 2,
@@ -54,6 +56,7 @@ const initialState = {
       id: 2,
       slug: 'kolor-rekawkow',
       name: 'Kolor rękawków',
+      active: false,
       items: [
         {
           id: 4,
@@ -172,6 +175,20 @@ export default (state = initialState, action) => {
         ? action.payload.categorySlug
         : firstCategorySlug;
 
+      const categoriesSetActive = state.categories.map(category => {
+        if (category.slug === activeCategorySlug) {
+          return {
+            ...category,
+            active: true
+          };
+        } else {
+          return {
+            ...category,
+            active: false
+          };
+        }
+      });
+
       const userSettingsActiveCategory = {
         ...state.userSettings,
         activeCategorySlug
@@ -184,16 +201,9 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
+        categories: categoriesSetActive,
         userSettings: userSettingsActiveCategory
       };
-    case constants.CONFIGURATOR_UPDATE_ACTIVE_CATEGORY_OBJECT:
-      const activeCategoryIndex = state.categories.findIndex(
-        category => category.slug === state.userSettings.activeCategorySlug
-      );
-      const activeCategory =
-        activeCategoryIndex > -1 && state.categories[activeCategoryIndex];
-
-      return { ...state, activeCategory };
     case constants.CONFIGURATOR_SAVED_PRODUCTS_TOGGLE:
       return {
         ...state,

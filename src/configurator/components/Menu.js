@@ -11,7 +11,6 @@ import { routeCategoryName, routeSummaryName } from '../../app/App';
 class Menu extends Component {
   handleCategoryClick = categorySlug => {
     this.props.setActiveCategory(categorySlug);
-    this.props.updateActiveCategoryObject();
   };
 
   render() {
@@ -57,9 +56,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug)),
-    updateActiveCategoryObject: () =>
-      dispatch(configuratorActions.updateActiveCategoryObject())
+      dispatch(configuratorActions.setActiveCategory(categorySlug))
   };
 };
 
