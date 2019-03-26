@@ -16,7 +16,7 @@ class SavedProducts extends Component {
   };
 
   handleAddProductClick = e => {
-    if (!this.props.configuratorStore.productExist) {
+    if (!this.props.configuratorStore.productExists) {
       createProductThumb(this.props.addProduct);
     } else {
       document.querySelector('#activeItem').style.visibility = 'hidden';
@@ -33,6 +33,7 @@ class SavedProducts extends Component {
 
   componentDidMount() {
     this.props.checkProductExist();
+    this.props.checkSavedProducts();
   }
 
   componentDidUpdate() {
@@ -113,7 +114,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.setActiveItems(items)),
     removeProduct: index => dispatch(configuratorActions.removeProduct(index)),
     addProduct: img => dispatch(configuratorActions.addProduct(img)),
-    checkProductExist: () => dispatch(configuratorActions.checkProductExist())
+    checkProductExist: () => dispatch(configuratorActions.checkProductExist()),
+    checkSavedProducts: () => dispatch(configuratorActions.checkSavedProducts())
   };
 };
 

@@ -65,3 +65,9 @@ export const checkProductExist = () => {
     type: constants.CONFIGURATOR_CHECK_PRODUCT_EXIST
   };
 };
+
+export const checkSavedProducts = () => {
+  return {
+    type: constants.CONFIGURATOR_CHECK_SAVED_PRODUCTS
+  };
+};

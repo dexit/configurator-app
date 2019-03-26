@@ -78,7 +78,7 @@ const initialState = {
     }
   ],
   savedProductsModal: false,
-  productExist: false,
+  productExists: false,
   userSettings: {
     activeCategorySlug: '',
     activeItems: null,
@@ -266,7 +266,7 @@ export default (state = initialState, action) => {
         ...state
       };
     case constants.CONFIGURATOR_CHECK_PRODUCT_EXIST:
-      const productExist =
+      const productExists =
         state.userSettings.savedProducts.findIndex(
           item =>
             JSON.stringify(item.productParts) ===
@@ -277,7 +277,39 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        productExist
+        productExists
+      };
+    case constants.CONFIGURATOR_CHECK_SAVED_PRODUCTS:
+      const existingSavedProducts = [
+        ...state.userSettings.savedProducts
+      ].filter(product => {
+        return Object.keys(product.productParts).every(function(key) {
+          const categoryIndex = state.categories.findIndex(
+            category => category.slug === key
+          );
+
+          if (categoryIndex > -1) {
+            const itemIndex = state.categories[categoryIndex].items.findIndex(
+              item => item.id === product.productParts[key]
+            );
+
+            if (itemIndex > -1) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        });
+      });
+
+      return {
+        ...state,
+        userSettings: {
+          ...state.userSettings,
+          savedProducts: existingSavedProducts
+        }
       };
     default:
       return state;

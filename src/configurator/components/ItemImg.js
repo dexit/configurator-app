@@ -10,7 +10,7 @@ class ItemImg extends Component {
   componentUpdated = false;
 
   handleAddClick = () => {
-    if (!this.props.configuratorStore.productExist) {
+    if (!this.props.configuratorStore.productExists) {
       this.props.openSavedProducts();
       createProductThumb(this.props.addProduct);
     } else {
@@ -52,7 +52,7 @@ class ItemImg extends Component {
       })
     );
 
-    const productExist = this.props.configuratorStore.productExist;
+    const productExists = this.props.configuratorStore.productExists;
 
     return (
       <div
@@ -64,12 +64,12 @@ class ItemImg extends Component {
         {images}
         <button
           className={`${styles.btnAdd} ${
-            productExist ? styles.active : undefined
+            productExists ? styles.active : undefined
           }`}
           id="btnAdd"
           onClick={this.handleAddClick}
         >
-          {!productExist ? (
+          {!productExists ? (
             <span>
               Dodaj produkt <br /> do ulubionych
             </span>
