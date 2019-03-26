@@ -70,13 +70,9 @@ class ItemImg extends Component {
           onClick={this.handleAddClick}
         >
           {!productExists ? (
-            <span>
-              Dodaj produkt <br /> do ulubionych
-            </span>
+            <span>Zapisz produkt</span>
           ) : (
-            <span>
-              Produkt dodany <br /> do ulubionych
-            </span>
+            <span>Produkt zapisany</span>
           )}
         </button>
       </div>

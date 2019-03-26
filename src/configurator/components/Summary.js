@@ -14,6 +14,9 @@ class Summary extends Component {
   };
 
   render() {
+    const savedProductsCount = this.props.configuratorStore.userSettings
+      .savedProducts.length;
+
     return (
       <div className={styles.wrapper}>
         <div className="row">
@@ -22,7 +25,7 @@ class Summary extends Component {
               className={`${styles.item}`}
               onClick={this.handleOpenProductsClick}
             >
-              Ulubione produkty
+              Zapisane produkty ({savedProductsCount})
             </button>
           </div>
           <div className="col-md-6 p-4 d-flex justify-content-center align-content-center">
