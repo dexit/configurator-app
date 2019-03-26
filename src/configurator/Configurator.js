@@ -89,7 +89,7 @@ class Configurator extends Component {
           <header className="text-center text-uppercase my-5">
             <h1>Konfigurator</h1>
           </header>
-          <div className="row flex-grow-1">
+          <div className={`row flex-grow-1 ${styles.contentWrapper}`}>
             <div className="col-md-2">
               <Menu />
             </div>

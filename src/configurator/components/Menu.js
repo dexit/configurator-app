@@ -14,9 +14,9 @@ class Menu extends Component {
   };
 
   render() {
-    const configuratorStore = this.props.configuratorStore;
+    const categories = this.props.configuratorStore.categories;
 
-    const menu = configuratorStore.categories.map(item => {
+    const menu = categories.map(item => {
       return (
         <NavLink
           to={'/' + routeCategoryName + '/' + item.slug}
@@ -43,7 +43,7 @@ class Menu extends Component {
     return (
       <div className={styles.wrapper}>
         {menu}
-        {summary}
+        {categories.length ? summary : null}
       </div>
     );
   }

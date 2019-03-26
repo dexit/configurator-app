@@ -54,6 +54,22 @@ class ItemImg extends Component {
 
     const productExists = this.props.configuratorStore.productExists;
 
+    const btnAddProduct = (
+      <button
+        className={`${styles.btnAdd} ${
+          productExists ? styles.active : undefined
+        }`}
+        id="btnAdd"
+        onClick={this.handleAddClick}
+      >
+        {!productExists ? (
+          <span>Zapisz produkt</span>
+        ) : (
+          <span>Produkt zapisany</span>
+        )}
+      </button>
+    );
+
     return (
       <div
         className={styles.bg}
@@ -62,19 +78,7 @@ class ItemImg extends Component {
       >
         <img src="/img/transparent-bg.png" alt="" className="img-fluid" />
         {images}
-        <button
-          className={`${styles.btnAdd} ${
-            productExists ? styles.active : undefined
-          }`}
-          id="btnAdd"
-          onClick={this.handleAddClick}
-        >
-          {!productExists ? (
-            <span>Zapisz produkt</span>
-          ) : (
-            <span>Produkt zapisany</span>
-          )}
-        </button>
+        {categories.length ? btnAddProduct : null}
       </div>
     );
   }
