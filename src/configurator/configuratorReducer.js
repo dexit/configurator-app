@@ -77,7 +77,6 @@ const initialState = {
       ]
     }
   ],
-  activeCategory: {},
   savedProductsModal: false,
   userSettings: {
     activeCategorySlug: '',

@@ -43,6 +43,8 @@ class Configurator extends Component {
         }
       } else if (!activeCategorySlug) {
         this.props.setActiveCategory(firstCategory);
+      } else if (activeCategorySlug) {
+        this.props.setActiveCategory(activeCategorySlug);
       }
     };
 
