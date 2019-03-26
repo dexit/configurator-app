@@ -78,6 +78,7 @@ const initialState = {
     }
   ],
   savedProductsModal: false,
+  productExist: false,
   userSettings: {
     activeCategorySlug: '',
     activeItems: null,
@@ -263,6 +264,20 @@ export default (state = initialState, action) => {
     case constants.CONFIGURATOR_SAVE_PRODUCT_IMG:
       return {
         ...state
+      };
+    case constants.CONFIGURATOR_CHECK_PRODUCT_EXIST:
+      const productExist =
+        state.userSettings.savedProducts.findIndex(
+          item =>
+            JSON.stringify(item.productParts) ===
+            JSON.stringify(state.userSettings.activeItems)
+        ) > -1
+          ? true
+          : false;
+
+      return {
+        ...state,
+        productExist
       };
     default:
       return state;

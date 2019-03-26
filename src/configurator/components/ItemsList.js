@@ -60,7 +60,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveItems: items => dispatch(configuratorActions.setActiveItems(items))
+    setActiveItems: items =>
+      dispatch(configuratorActions.setActiveItems(items)),
+    checkProductExist: () => dispatch(configuratorActions.checkProductExist())
   };
 };
 

@@ -59,3 +59,9 @@ export const saveProductImg = () => {
     type: constants.CONFIGURATOR_SAVE_PRODUCT_IMG
   };
 };
+
+export const checkProductExist = () => {
+  return {
+    type: constants.CONFIGURATOR_CHECK_PRODUCT_EXIST
+  };
+};

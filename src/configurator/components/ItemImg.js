@@ -7,10 +7,30 @@ import styles from './ItemImg.module.scss';
 import createProductThumb from '../../utils/createProductThumb';
 
 class ItemImg extends Component {
+  componentUpdated = false;
+
   handleAddClick = () => {
-    this.props.openSavedProducts();
-    createProductThumb(this.props.addProduct);
+    if (!this.props.configuratorStore.productExist) {
+      this.props.openSavedProducts();
+      createProductThumb(this.props.addProduct);
+    } else {
+      this.props.openSavedProducts();
+    }
   };
+
+  componentDidMount() {
+    this.props.checkProductExist();
+  }
+
+  componentDidUpdate() {
+    if (!this.componentUpdated) {
+      this.props.checkProductExist();
+
+      this.componentUpdated = true;
+    } else {
+      this.componentUpdated = false;
+    }
+  }
 
   render() {
     const categories = this.props.configuratorStore.categories;
@@ -32,6 +52,8 @@ class ItemImg extends Component {
       })
     );
 
+    const productExist = this.props.configuratorStore.productExist;
+
     return (
       <div
         className={styles.bg}
@@ -41,11 +63,21 @@ class ItemImg extends Component {
         <img src="/img/transparent-bg.png" alt="" className="img-fluid" />
         {images}
         <button
-          className={styles.btnAdd}
+          className={`${styles.btnAdd} ${
+            productExist ? styles.active : undefined
+          }`}
           id="btnAdd"
           onClick={this.handleAddClick}
         >
-          Dodaj produkt <br /> do ulubionych
+          {!productExist ? (
+            <span>
+              Dodaj produkt <br /> do ulubionych
+            </span>
+          ) : (
+            <span>
+              Produkt dodany <br /> do ulubionych
+            </span>
+          )}
         </button>
       </div>
     );
@@ -59,7 +91,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     openSavedProducts: () => dispatch(configuratorActions.openSavedProducts()),
-    addProduct: img => dispatch(configuratorActions.addProduct(img))
+    addProduct: img => dispatch(configuratorActions.addProduct(img)),
+    checkProductExist: () => dispatch(configuratorActions.checkProductExist())
   };
 };
 

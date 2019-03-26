@@ -8,24 +8,15 @@ import styles from './SavedProducts.module.scss';
 import createProductThumb from '../../utils/createProductThumb';
 
 class SavedProducts extends Component {
+  componentUpdated = false;
+
   handleProductClick = items => {
     this.props.setActiveItems(items);
     this.props.savedProductsToggle();
   };
 
   handleAddProductClick = e => {
-    const savedProducts = this.props.configuratorStore.userSettings
-      .savedProducts;
-    const activeItems = this.props.configuratorStore.userSettings.activeItems;
-    const productExist =
-      savedProducts.findIndex(
-        item =>
-          JSON.stringify(item.productParts) === JSON.stringify(activeItems)
-      ) > -1
-        ? true
-        : false;
-
-    if (!productExist) {
+    if (!this.props.configuratorStore.productExist) {
       createProductThumb(this.props.addProduct);
     } else {
       document.querySelector('#activeItem').style.visibility = 'hidden';
@@ -39,6 +30,20 @@ class SavedProducts extends Component {
   handleRemoveProductClick = index => {
     this.props.removeProduct(index);
   };
+
+  componentDidMount() {
+    this.props.checkProductExist();
+  }
+
+  componentDidUpdate() {
+    if (!this.componentUpdated) {
+      this.props.checkProductExist();
+
+      this.componentUpdated = true;
+    } else {
+      this.componentUpdated = false;
+    }
+  }
 
   render() {
     const modal = this.props.configuratorStore.savedProductsModal;
@@ -107,7 +112,8 @@ const mapDispatchToProps = dispatch => {
     setActiveItems: items =>
       dispatch(configuratorActions.setActiveItems(items)),
     removeProduct: index => dispatch(configuratorActions.removeProduct(index)),
-    addProduct: img => dispatch(configuratorActions.addProduct(img))
+    addProduct: img => dispatch(configuratorActions.addProduct(img)),
+    checkProductExist: () => dispatch(configuratorActions.checkProductExist())
   };
 };
 
