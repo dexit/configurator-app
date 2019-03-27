@@ -191,10 +191,6 @@ export default (state = initialState, action) => {
         ...state,
         userSettings: userSettingsAddProduct
       };
-    case constants.CONFIGURATOR_SAVE_PRODUCT_IMG:
-      return {
-        ...state
-      };
     case constants.CONFIGURATOR_CHECK_PRODUCT_EXIST:
       const productExists =
         state.userSettings.savedProducts.findIndex(

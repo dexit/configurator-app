@@ -4,13 +4,30 @@ import * as configuratorActions from '../configuratorActions';
 
 import styles from './Summary.module.scss';
 
+import html2pdf from 'html2pdf.js';
+import saveBase64AsFile from '../../utils/saveBase64AsFile';
+
 class Summary extends Component {
   handleOpenProductsClick = () => {
     this.props.openSavedProducts();
   };
 
   handleSaveProductImgClick = () => {
-    // this.saveProductImg();
+    const opt = {
+      html2canvas: {
+        logging: false,
+        ignoreElements: element => element.id === 'btnAdd'
+      }
+    };
+
+    html2pdf()
+      .set(opt)
+      .from(document.querySelector('#product'))
+      .toImg()
+      .outputImg('dataurlstring')
+      .then(image => {
+        saveBase64AsFile(image, 'produkt.jpg');
+      });
   };
 
   render() {
@@ -48,8 +65,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openSavedProducts: () => dispatch(configuratorActions.openSavedProducts()),
-    saveProductImg: () => dispatch(configuratorActions.saveProductImg())
+    openSavedProducts: () => dispatch(configuratorActions.openSavedProducts())
   };
 };
 
