@@ -1,15 +1,23 @@
-import html2canvas from 'html2canvas';
+// import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
 import imageResize from './imageResize';
 
 export default function createProductThumb(action) {
-  html2canvas(document.querySelector('#product'), {
-    logging: false,
-    ignoreElements: element => element.id === 'btnAdd'
-  }).then(canvas => {
-    const imgUrl = canvas.toDataURL('image/jpeg');
+  const opt = {
+    html2canvas: {
+      logging: false,
+      ignoreElements: element => element.id === 'btnAdd'
+    }
+  };
 
-    imageResize(imgUrl, 186, 124).then(imgResized => {
-      action(imgResized);
+  html2pdf()
+    .set(opt)
+    .from(document.querySelector('#product'))
+    .toImg()
+    .outputImg()
+    .then(image => {
+      imageResize(image, 186, 124).then(imgResizedUrl => {
+        action(imgResizedUrl);
+      });
     });
-  });
 }
