@@ -71,3 +71,38 @@ export const checkSavedProducts = () => {
     type: constants.CONFIGURATOR_CHECK_SAVED_PRODUCTS
   };
 };
+
+export function getCategories() {
+  return dispatch => {
+    dispatch(getCategoriesStart());
+
+    return fetch('/categories.json')
+      .then(response => response.json())
+      .then(data => dispatch(getCategoriesSuccess(data)))
+      .catch(error => dispatch(getCategoriesError(error)));
+  };
+}
+
+export function getCategoriesStart() {
+  return {
+    type: constants.CONFIGURATOR_GET_CATEGORIES_START
+  };
+}
+
+export function getCategoriesSuccess(data) {
+  return {
+    type: constants.CONFIGURATOR_GET_CATEGORIES_SUCCESS,
+    payload: {
+      data
+    }
+  };
+}
+
+export function getCategoriesError(error) {
+  return {
+    type: constants.CONFIGURATOR_GET_CATEGORIES_ERROR,
+    payload: {
+      error
+    }
+  };
+}

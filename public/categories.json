@@ -1,0 +1,74 @@
+[
+  {
+    "id": 0,
+    "slug": "model",
+    "name": "Model",
+    "active": false,
+    "items": [
+      {
+        "id": 0,
+        "name": "model 1",
+        "imgThumb": "/img/model-1.png",
+        "imgLarge": "/img/model-1.png",
+        "indexCss": 0,
+        "active": false
+      },
+      {
+        "id": 1,
+        "name": "model 2",
+        "imgThumb": "/img/model-2.png",
+        "imgLarge": "/img/model-2.png",
+        "indexCss": 0,
+        "active": false
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "slug": "kolor-dodatkow",
+    "name": "Kolor dodatków",
+    "active": false,
+    "items": [
+      {
+        "id": 2,
+        "name": "dodatek 1",
+        "imgThumb": "/img/dodatki-1.png",
+        "imgLarge": "/img/dodatki-1.png",
+        "indexCss": 1,
+        "active": false
+      },
+      {
+        "id": 3,
+        "name": "dodatek 2",
+        "imgThumb": "/img/dodatki-2.png",
+        "imgLarge": "/img/dodatki-2.png",
+        "indexCss": 1,
+        "active": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "kolor-rekawkow",
+    "name": "Kolor rękawków",
+    "active": false,
+    "items": [
+      {
+        "id": 4,
+        "name": "kolor 1",
+        "imgThumb": "/img/rekawki-1.png",
+        "imgLarge": "/img/rekawki-1.png",
+        "indexCss": 1,
+        "active": false
+      },
+      {
+        "id": 5,
+        "name": "kolor 2",
+        "imgThumb": "/img/rekawki-2.png",
+        "imgLarge": "/img/rekawki-2.png",
+        "indexCss": 1,
+        "active": false
+      }
+    ]
+  }
+]

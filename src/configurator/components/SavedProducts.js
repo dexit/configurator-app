@@ -33,10 +33,17 @@ class SavedProducts extends Component {
 
   componentDidMount() {
     this.props.checkProductExist();
-    this.props.checkSavedProducts();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const isCategoriesLoaded = this.props.configuratorStore.isCategoriesLoaded;
+
+    if (isCategoriesLoaded !== prevProps.configuratorStore.isCategoriesLoaded) {
+      if (isCategoriesLoaded) {
+        this.props.checkSavedProducts();
+      }
+    }
+
     if (!this.componentUpdated) {
       this.props.checkProductExist();
 

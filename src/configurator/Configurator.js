@@ -62,8 +62,10 @@ class Configurator extends Component {
   }
 
   componentDidMount() {
-    this.setDefaultItems();
-    this.setDefaultCategory();
+    this.props.getCategories().then(() => {
+      this.setDefaultItems();
+      this.setDefaultCategory();
+    });
   }
 
   getDefaultCategory() {
@@ -83,6 +85,24 @@ class Configurator extends Component {
   }
 
   render() {
+    const isLoading = this.props.configuratorStore.isLoading;
+    const spinner = (
+      <div
+        className={`d-flex justify-content-center align-items-center ${
+          styles.loadingSpinner
+        }`}
+      >
+        <div
+          className={`spinner-border text-danger ${
+            styles.loadingSpinnerBorder
+          }`}
+          role="status"
+        >
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
+
     return (
       <>
         <div className={`d-flex flex-column ${styles.wrapper}`}>
@@ -112,6 +132,7 @@ class Configurator extends Component {
         </div>
 
         <SavedProducts />
+        {isLoading ? spinner : null}
       </>
     );
   }
@@ -127,7 +148,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.setActiveCategory(categorySlug)),
     setDefaultActiveItems: () =>
       dispatch(configuratorActions.setDefaultActiveItems()),
-    setActiveItems: () => dispatch(configuratorActions.setActiveItems())
+    setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
+    getCategories: () => dispatch(configuratorActions.getCategories())
   };
 };
 
