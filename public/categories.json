@@ -8,7 +8,7 @@
       {
         "id": 0,
         "name": "model 1",
-        "imgThumb": "/img/model-1.png",
+        "imgThumb": "/img/model-1_thumb.png",
         "imgLarge": "/img/model-1.png",
         "indexCss": 0,
         "active": false
@@ -16,7 +16,7 @@
       {
         "id": 1,
         "name": "model 2",
-        "imgThumb": "/img/model-2.png",
+        "imgThumb": "/img/model-2_thumb.png",
         "imgLarge": "/img/model-2.png",
         "indexCss": 0,
         "active": false
@@ -32,7 +32,7 @@
       {
         "id": 2,
         "name": "dodatek 1",
-        "imgThumb": "/img/dodatki-1.png",
+        "imgThumb": "/img/dodatki-1_thumb.png",
         "imgLarge": "/img/dodatki-1.png",
         "indexCss": 1,
         "active": false
@@ -40,7 +40,7 @@
       {
         "id": 3,
         "name": "dodatek 2",
-        "imgThumb": "/img/dodatki-2.png",
+        "imgThumb": "/img/dodatki-2_thumb.png",
         "imgLarge": "/img/dodatki-2.png",
         "indexCss": 1,
         "active": false
@@ -56,7 +56,7 @@
       {
         "id": 4,
         "name": "kolor 1",
-        "imgThumb": "/img/rekawki-1.png",
+        "imgThumb": "/img/rekawki-1_thumb.png",
         "imgLarge": "/img/rekawki-1.png",
         "indexCss": 1,
         "active": false
@@ -64,7 +64,7 @@
       {
         "id": 5,
         "name": "kolor 2",
-        "imgThumb": "/img/rekawki-2.png",
+        "imgThumb": "/img/rekawki-2_thumb.png",
         "imgLarge": "/img/rekawki-2.png",
         "indexCss": 1,
         "active": false
