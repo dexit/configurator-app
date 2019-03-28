@@ -1,5 +1,7 @@
 import * as constants from '../store/constants';
 
+import { API_CATEGORIES } from '../app/App';
+
 export const setDefaultActiveItems = () => {
   return {
     type: constants.CONFIGURATOR_SET_DEFAULT_ACTIVE_ITEMS
@@ -70,7 +72,7 @@ export function getCategories() {
   return dispatch => {
     dispatch(getCategoriesStart());
 
-    return fetch('/categories.json')
+    return fetch(API_CATEGORIES)
       .then(response => response.json())
       .then(data => dispatch(getCategoriesSuccess(data)))
       .catch(error => dispatch(getCategoriesError(error)));
@@ -98,5 +100,17 @@ export function getCategoriesError(error) {
     payload: {
       error
     }
+  };
+}
+
+export function productEmailModalToggle() {
+  return {
+    type: constants.PRODUCT_EMAIL_MODAL_TOGGLE
+  };
+}
+
+export function productEmailModalOpen() {
+  return {
+    type: constants.PRODUCT_EMAIL_MODAL_OPEN
   };
 }

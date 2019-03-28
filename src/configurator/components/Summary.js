@@ -7,6 +7,7 @@ import styles from './Summary.module.scss';
 import html2pdf from 'html2pdf.js';
 import saveBase64AsFile from '../../utils/saveBase64AsFile';
 
+import SendProductEmail from './SendProductEmail';
 import TemplatePDF from './TemplatePDF';
 
 class Summary extends Component {
@@ -49,6 +50,10 @@ class Summary extends Component {
       .save();
   };
 
+  handleProductEmailModalOpen = () => {
+    this.props.productEmailModalOpen();
+  };
+
   render() {
     const savedProductsCount = this.props.configuratorStore.userSettings
       .savedProducts.length;
@@ -81,8 +86,18 @@ class Summary extends Component {
                 Zapisz opis produktu jako PDF
               </button>
             </div>
+            <div className="col-md-6 p-4 d-flex justify-content-center align-content-center">
+              <button
+                className={`p-3 ${styles.item}`}
+                onClick={this.handleProductEmailModalOpen}
+              >
+                Wyślij opis produktu w wiadomości E-mail
+              </button>
+            </div>
           </div>
         </div>
+
+        <SendProductEmail />
 
         <TemplatePDF categories={this.props.configuratorStore.categories} />
       </>
@@ -96,7 +111,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openSavedProducts: () => dispatch(configuratorActions.openSavedProducts())
+    openSavedProducts: () => dispatch(configuratorActions.openSavedProducts()),
+    productEmailModalOpen: () =>
+      dispatch(configuratorActions.productEmailModalOpen())
   };
 };
 

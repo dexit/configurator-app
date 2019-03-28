@@ -9,6 +9,7 @@ const initialState = {
   isCategoriesLoaded: false,
   savedProductsModal: false,
   productExists: false,
+  productEmailModal: false,
   userSettings: {
     activeCategorySlug: '',
     activeItems: null,
@@ -248,6 +249,16 @@ export default (state = initialState, action) => {
       };
     case constants.CONFIGURATOR_GET_CATEGORIES_ERROR:
       return { ...state, isLoading: false, isError: true };
+    case constants.PRODUCT_EMAIL_MODAL_TOGGLE:
+      return {
+        ...state,
+        productEmailModal: !state.productEmailModal
+      };
+    case constants.PRODUCT_EMAIL_MODAL_OPEN:
+      return {
+        ...state,
+        productEmailModal: true
+      };
     default:
       return state;
   }

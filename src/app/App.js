@@ -5,6 +5,10 @@ import store from '../store/store';
 
 import Configurator from '../configurator/Configurator';
 
+export const API = '/';
+export const API_CATEGORIES = API + 'categories.json';
+export const API_PRODUCT_EMAIL = 'http://httpbin.org/post';
+
 export const routeCategoryName = 'kategoria';
 export const routeSummaryName = 'gotowe';
 
