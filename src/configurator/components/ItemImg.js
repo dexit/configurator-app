@@ -78,7 +78,7 @@ class ItemImg extends Component {
       >
         <img src="/img/transparent-bg.png" alt="" className="img-fluid" />
         {images}
-        {categories.length ? btnAddProduct : null}
+        {categories.length && !this.props.onlyImg ? btnAddProduct : null}
       </div>
     );
   }
