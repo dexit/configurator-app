@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
 
-import ItemImg from './ItemImg';
-
 import styles from './Summary.module.scss';
 
 import html2pdf from 'html2pdf.js';
 import saveBase64AsFile from '../../utils/saveBase64AsFile';
+
+import TemplatePDF from './TemplatePDF';
 
 class Summary extends Component {
   handleOpenProductsClick = () => {
@@ -53,46 +53,6 @@ class Summary extends Component {
     const savedProductsCount = this.props.configuratorStore.userSettings
       .savedProducts.length;
 
-    const productDetails = (
-      <table>
-        <tbody>
-          {this.props.configuratorStore.categories.map(category => {
-            let details = {
-              categoryName: category.name,
-              itemName: ''
-            };
-
-            category.items.forEach(item => {
-              if (item.active === true) {
-                details.itemName = item.name;
-              }
-            });
-
-            return (
-              <tr key={category.id}>
-                <th className="py-2 px-4">{details.categoryName}:</th>
-                <td className="py-2 px-4">{details.itemName}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    );
-
-    const templatePDF = (
-      <div className="d-none">
-        <div id="templatePDF">
-          <h2 className="mt-5 mb-4 text-center text-uppercase">Twój produkt</h2>
-          <div className="row">
-            <div className="col-6 p-4">
-              <ItemImg onlyImg={true} />
-            </div>
-            <div className="col-6 p-4">{productDetails}</div>
-          </div>
-        </div>
-      </div>
-    );
-
     return (
       <>
         <div className={styles.wrapper}>
@@ -124,7 +84,7 @@ class Summary extends Component {
           </div>
         </div>
 
-        {templatePDF}
+        <TemplatePDF categories={this.props.configuratorStore.categories} />
       </>
     );
   }
