@@ -124,7 +124,7 @@ class SendProductEmail extends Component {
 
               return resp;
             })
-            .then(resp => resp.json())
+            .then(resp => (resp.ok ? resp.json() : resp))
             .then(resp => {
               console.log(resp);
             });
