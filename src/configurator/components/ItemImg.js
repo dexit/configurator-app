@@ -56,7 +56,7 @@ class ItemImg extends Component {
 
     const btnAddProduct = (
       <button
-        className={`${styles.btnAdd} ${
+        className={`btn btn-primary ${styles.btnAdd} ${
           productExists ? styles.active : undefined
         }`}
         id="btnAdd"
