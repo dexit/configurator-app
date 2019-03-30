@@ -65,7 +65,7 @@ const productEmailForm = props => {
         <Field
           name="emailSender"
           id="emailSender"
-          label="Twój E-mail"
+          label="Twój E-mail *"
           component={input}
           type="email"
         />
@@ -74,7 +74,7 @@ const productEmailForm = props => {
         <Field
           name="emailRecipient"
           id="emailRecipient"
-          label="E-mail odbiorcy"
+          label="E-mail odbiorcy *"
           component={input}
           type="email"
         />
@@ -83,7 +83,7 @@ const productEmailForm = props => {
         <Field
           name="title"
           id="title"
-          label="Tytuł"
+          label="Tytuł *"
           component={input}
           type="text"
         />
@@ -100,10 +100,11 @@ const productEmailForm = props => {
       <FormGroup check>
         <Field
           name="regulation"
-          label="Zgadzam się na regulamin"
+          label="Zgadzam się na regulamin *"
           component={checkbox}
         />
       </FormGroup>
+      <p className="mt-4">* pola wymagane</p>
       <Button
         color="primary"
         className="mt-4"
