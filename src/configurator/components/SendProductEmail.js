@@ -20,8 +20,14 @@ class SendProductEmail extends Component {
     this.props.productEmailModalToggle();
   };
 
-  handleSubmit = e => {
-    const data = new FormData(e.target);
+  handleSubmit = values => {
+    const data = new FormData();
+
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        data.append(key, values[key]);
+      }
+    }
 
     return createProductPdf()
       .then(pdf => {
