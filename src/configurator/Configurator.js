@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from './configuratorActions';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import styles from './Configurator.module.scss';
 
@@ -11,9 +12,11 @@ import ItemImg from './components/ItemImg';
 import Summary from './components/Summary';
 import SavedProducts from './components/SavedProducts';
 
-import { routeCategoryName, routeSummaryName } from '../app/App';
-
 class Configurator extends Component {
+  static contextTypes = {
+    t: PropTypes.func.isRequired
+  };
+
   setDefaultCategory() {
     const matchCategorySlug = this.props.match.params.category;
     const activeCategorySlug = this.props.configuratorStore.userSettings
@@ -38,7 +41,7 @@ class Configurator extends Component {
         } else {
           this.props.setActiveCategory(firstCategory);
           this.props.history.replace(
-            '/' + routeCategoryName + '/' + firstCategory
+            '/' + this.context.t('routeCategoryName') + '/' + firstCategory
           );
         }
       } else if (!activeCategorySlug) {
@@ -85,6 +88,7 @@ class Configurator extends Component {
   }
 
   render() {
+    const t = this.context.t;
     const isLoading = this.props.configuratorStore.isLoading;
     const spinner = (
       <div
@@ -98,7 +102,7 @@ class Configurator extends Component {
           }`}
           role="status"
         >
-          <span className="sr-only">Loading...</span>
+          <span className="sr-only">{t('loading')}...</span>
         </div>
       </div>
     );
@@ -107,7 +111,7 @@ class Configurator extends Component {
       <>
         <div className={`d-flex flex-column ${styles.wrapper}`}>
           <header className="text-center text-uppercase my-5">
-            <h1>Konfigurator</h1>
+            <h1>{t('configurator')}</h1>
           </header>
           <div className={`row flex-grow-1 ${styles.contentWrapper}`}>
             <div className="col-md-2">
@@ -116,12 +120,20 @@ class Configurator extends Component {
             <div className="col-md-3">
               <Switch>
                 <Route
-                  path={'/' + routeCategoryName + '/:category'}
+                  path={'/' + t('routeCategoryName') + '/:category'}
                   component={MenuItems}
                 />
-                <Route path={'/' + routeSummaryName} component={Summary} />
+                <Route
+                  path={'/' + t('routeCategoryName')}
+                  component={Summary}
+                />
                 <Redirect
-                  to={'/' + routeCategoryName + '/' + this.getDefaultCategory()}
+                  to={
+                    '/' +
+                    t('routeCategoryName') +
+                    '/' +
+                    this.getDefaultCategory()
+                  }
                 />
               </Switch>
             </div>

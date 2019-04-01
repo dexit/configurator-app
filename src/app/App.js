@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 import store from '../store/store';
+import I18n from 'redux-i18n';
 
-import Configurator from '../configurator/Configurator';
+import { translations } from './translations';
+import Router from '../Router';
 
 export const API = '/';
 export const API_CATEGORIES = API + 'categories.json';
@@ -16,16 +18,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router basename={process.env.PUBLIC_URL}>
-          <Switch>
-            <Route
-              path={'/' + routeCategoryName + '/:category'}
-              component={Configurator}
-            />
-            <Route path={'/' + routeSummaryName} component={Configurator} />
-            <Route path="/" component={Configurator} />
-          </Switch>
-        </Router>
+        <I18n translations={translations} initialLang="pl" fallbackLang="pl">
+          <Router />
+        </I18n>
       </Provider>
     );
   }
