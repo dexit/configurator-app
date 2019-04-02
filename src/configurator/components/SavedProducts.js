@@ -19,10 +19,10 @@ class SavedProducts extends Component {
     if (!this.props.configuratorStore.productExists) {
       createProductThumb(this.props.addProduct);
     } else {
-      document.querySelector('#activeItem').style.visibility = 'hidden';
+      this.activeItem.style.visibility = 'hidden';
 
       setTimeout(() => {
-        document.querySelector('#activeItem').style.visibility = 'visible';
+        this.activeItem.style.visibility = 'visible';
       }, 200);
     }
   };
@@ -63,13 +63,12 @@ class SavedProducts extends Component {
       const productsAreEqual =
         JSON.stringify(item.productParts) === JSON.stringify(activeItems);
       const activeItemClass = productsAreEqual ? styles.active : undefined;
-      const activeItemWrapperId = productsAreEqual ? 'activeItem' : undefined;
 
       return (
         <div
           className={styles.itemWrapper}
           key={index}
-          id={activeItemWrapperId}
+          ref={activeItem => productsAreEqual && (this.activeItem = activeItem)}
         >
           <button
             className={styles.btnRemove}
