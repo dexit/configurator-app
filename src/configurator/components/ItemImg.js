@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
+import { withTranslation } from 'react-i18next';
 
 import styles from './ItemImg.module.scss';
 
@@ -33,6 +34,7 @@ class ItemImg extends Component {
   }
 
   render() {
+    const t = this.props.t;
     const categories = this.props.configuratorStore.categories;
 
     const images = categories.map(category =>
@@ -63,9 +65,9 @@ class ItemImg extends Component {
         onClick={this.handleAddClick}
       >
         {!productExists ? (
-          <span>Zapisz produkt</span>
+          <span>{t('save_product')}</span>
         ) : (
-          <span>Produkt zapisany</span>
+          <span>{t('saved_product')}</span>
         )}
       </button>
     );
@@ -99,4 +101,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ItemImg);
+)(withTranslation()(ItemImg));

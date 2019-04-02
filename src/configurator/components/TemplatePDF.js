@@ -1,4 +1,6 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
+
 import ItemImg from './ItemImg';
 
 function TemplatePDF(props) {
@@ -31,7 +33,9 @@ function TemplatePDF(props) {
   return (
     <div className="d-none">
       <div id="templatePDF">
-        <h2 className="mt-5 mb-4 text-center text-uppercase">Twój produkt</h2>
+        <h2 className="mt-5 mb-4 text-center text-uppercase">
+          {props.t('your_product')}
+        </h2>
         <div className="row">
           <div className="col-6 p-4">
             <ItemImg onlyImg={true} />
@@ -43,4 +47,4 @@ function TemplatePDF(props) {
   );
 }
 
-export default TemplatePDF;
+export default withTranslation()(TemplatePDF);

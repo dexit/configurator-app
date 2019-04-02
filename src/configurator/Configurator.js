@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from './configuratorActions';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 
 import styles from './Configurator.module.scss';
 
@@ -13,10 +13,6 @@ import Summary from './components/Summary';
 import SavedProducts from './components/SavedProducts';
 
 class Configurator extends Component {
-  static contextTypes = {
-    t: PropTypes.func.isRequired
-  };
-
   setDefaultCategory() {
     const matchCategorySlug = this.props.match.params.category;
     const activeCategorySlug = this.props.configuratorStore.userSettings
@@ -41,7 +37,7 @@ class Configurator extends Component {
         } else {
           this.props.setActiveCategory(firstCategory);
           this.props.history.replace(
-            '/' + this.context.t('routeCategoryName') + '/' + firstCategory
+            '/' + this.props.t('routeCategoryName') + '/' + firstCategory
           );
         }
       } else if (!activeCategorySlug) {
@@ -88,7 +84,7 @@ class Configurator extends Component {
   }
 
   render() {
-    const t = this.context.t;
+    const t = this.props.t;
     const isLoading = this.props.configuratorStore.isLoading;
     const spinner = (
       <div
@@ -165,4 +161,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Configurator);
+)(withTranslation()(Configurator));

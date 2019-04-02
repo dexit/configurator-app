@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
+import { withTranslation } from 'react-i18next';
+
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import styles from './SavedProducts.module.scss';
@@ -54,6 +56,7 @@ class SavedProducts extends Component {
   }
 
   render() {
+    const t = this.props.t;
     const modal = this.props.configuratorStore.savedProductsModal;
     const savedProducts = this.props.configuratorStore.userSettings
       .savedProducts;
@@ -74,7 +77,7 @@ class SavedProducts extends Component {
             className={styles.btnRemove}
             onClick={this.handleRemoveProductClick.bind(this, index)}
           >
-            Usuń
+            {t('remove')}
           </button>
           <button
             className={`${styles.btnChange} ${activeItemClass}`}
@@ -96,10 +99,12 @@ class SavedProducts extends Component {
           centered={true}
         >
           <ModalHeader toggle={this.props.savedProductsToggle}>
-            Zapisane produkty
+            {t('saved_products')}
           </ModalHeader>
           <ModalBody>
-            <button onClick={this.handleAddProductClick}>Dodaj nowy</button>
+            <button onClick={this.handleAddProductClick}>
+              {t('add_product')}
+            </button>
             {savedProductsList}
           </ModalBody>
         </Modal>
@@ -128,4 +133,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SavedProducts);
+)(withTranslation()(SavedProducts));

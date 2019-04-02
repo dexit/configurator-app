@@ -1,13 +1,23 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
-const errorsMessages = {
-  email: 'Wpisz poprawny E-mail',
-  title: 'Wpisz tytuł',
-  message: 'Wpisz wiadomość',
-  regulation: 'Zaakceptuj zgodę'
+const translation = {
+  pl: {
+    email: 'Wpisz poprawny E-mail',
+    title: 'Wpisz tyłuł',
+    message: 'Wpisz wiadomość',
+    regulation: 'Zaakceptuj zgodę'
+  },
+  en: {
+    email: 'enter_correct_email',
+    title: 'enter_title',
+    message: 'enter_message',
+    regulation: 'accept_consent'
+  }
 };
 
 const validate = values => {
@@ -16,19 +26,19 @@ const validate = values => {
   const emailPatt = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
   if (!emailPatt.test(values.emailSender)) {
-    errors.emailSender = errorsMessages.email;
+    errors.emailSender = translation[i18n.language].email;
   }
 
   if (!emailPatt.test(values.emailRecipient)) {
-    errors.emailRecipient = errorsMessages.email;
+    errors.emailRecipient = translation[i18n.language].email;
   }
 
   if (!values.title) {
-    errors.title = errorsMessages.title;
+    errors.title = translation[i18n.language].title;
   }
 
   if (!values.regulation) {
-    errors.regulation = errorsMessages.regulation;
+    errors.regulation = translation[i18n.language].regulation;
   }
 
   return errors;
@@ -120,4 +130,4 @@ const productEmailForm = props => {
 export default reduxForm({
   form: 'productEmail',
   validate
-})(productEmailForm);
+})(withTranslation()(productEmailForm));

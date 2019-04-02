@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
+import { withTranslation } from 'react-i18next';
 
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
@@ -21,6 +22,7 @@ class SendProductEmail extends Component {
   };
 
   handleSubmit = values => {
+    const t = this.props.t;
     const data = new FormData();
 
     for (const key in values) {
@@ -42,14 +44,13 @@ class SendProductEmail extends Component {
             if (resp.ok) {
               this.setState({
                 submitting: false,
-                successMessage:
-                  'Formularz został wysłany. Email nie został dostarczony: testowe API - http://httpbin.org/post. Odpowiedź z serwera w konsoli.',
+                successMessage: t('form_sent'),
                 errorMessage: ''
               });
             } else {
               this.setState({
                 submitting: false,
-                errorMessage: 'Wystąpił błąd. Formularz nie został wysłany.'
+                errorMessage: t('form_error')
               });
             }
 
@@ -76,6 +77,7 @@ class SendProductEmail extends Component {
   }
 
   render() {
+    const t = this.props.t;
     const modalProductEmail = this.props.configuratorStore.productEmailModal;
 
     return (
@@ -85,7 +87,7 @@ class SendProductEmail extends Component {
         className={this.props.className}
       >
         <ModalHeader toggle={this.handleToggleModal}>
-          Wyślij opis produktu w wiadomości E-mail
+          {t('send_product_email')}
         </ModalHeader>
         <ModalBody>
           {this.state.successMessage ? null : (
@@ -115,4 +117,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SendProductEmail);
+)(withTranslation()(SendProductEmail));

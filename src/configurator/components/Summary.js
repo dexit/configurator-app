@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
+import { withTranslation } from 'react-i18next';
 
 import styles from './Summary.module.scss';
 
@@ -80,6 +81,7 @@ class Summary extends Component {
   };
 
   render() {
+    const t = this.props.t;
     const savedProductsCount = this.props.configuratorStore.userSettings
       .savedProducts.length;
 
@@ -93,7 +95,7 @@ class Summary extends Component {
                 className={`btn p-3 ${styles.item}`}
                 onClick={this.handleOpenProductsClick}
               >
-                Zapisane produkty ({savedProductsCount})
+                {t('saved_products')} ({savedProductsCount})
               </button>
             </div>
             <div className="col-md-6 p-4 d-flex justify-content-center align-content-center">
@@ -103,7 +105,7 @@ class Summary extends Component {
                 onClick={this.handleSaveProductImgClick}
                 disabled={this.state.creatingImg}
               >
-                Zapisz produkt jako obrazek
+                {t('save_product_as_img')}
                 {this.state.creatingImg && (
                   <div>
                     <Spinner size="sm" color="danger" className="ml-2" />
@@ -118,7 +120,7 @@ class Summary extends Component {
                 onClick={this.handleSaveProductPdfClick}
                 disabled={this.state.creatingPdf}
               >
-                Zapisz opis produktu jako PDF
+                {t('save_product_as_pdf')}
                 {this.state.creatingPdf && (
                   <div>
                     <Spinner size="sm" color="danger" className="ml-2" />
@@ -132,7 +134,7 @@ class Summary extends Component {
                 className={`btn p-3 ${styles.item}`}
                 onClick={this.handleProductEmailModalOpen}
               >
-                Wyślij opis produktu w wiadomości E-mail
+                {t('send_product_email')}
               </button>
             </div>
           </div>
@@ -161,4 +163,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Summary);
+)(withTranslation()(Summary));

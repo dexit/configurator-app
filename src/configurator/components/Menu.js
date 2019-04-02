@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as configuratorActions from '../configuratorActions';
+import { withTranslation } from 'react-i18next';
 
 import styles from './Menu.module.scss';
 
 import { NavLink, withRouter } from 'react-router-dom';
-
-import { routeCategoryName, routeSummaryName } from '../../app/App';
 
 class Menu extends Component {
   handleCategoryClick = categorySlug => {
@@ -14,12 +13,13 @@ class Menu extends Component {
   };
 
   render() {
+    const t = this.props.t;
     const categories = this.props.configuratorStore.categories;
 
     const menu = categories.map(item => {
       return (
         <NavLink
-          to={'/' + routeCategoryName + '/' + item.slug}
+          to={'/' + t('routeCategoryName') + '/' + item.slug}
           key={item.id}
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
@@ -32,7 +32,7 @@ class Menu extends Component {
 
     const summary = (
       <NavLink
-        to={'/' + routeSummaryName}
+        to={'/' + t('routeSummaryName')}
         className={`d-block px-5 py-3 ${styles.link}`}
         activeClassName={styles.active}
       >
@@ -64,5 +64,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Menu)
+  )(withTranslation()(Menu))
 );

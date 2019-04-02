@@ -1,19 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { withTranslation } from 'react-i18next';
 
 import Configurator from './configurator/Configurator';
 
-const Rtr = (props, context) => {
+const Rtr = props => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route
-          path={'/' + context.t('routeCategoryName') + '/:category'}
+          path={'/' + props.t('configurator.routeCategoryName') + '/:category'}
           component={Configurator}
         />
         <Route
-          path={'/' + context.t('routeSummaryName')}
+          path={'/' + props.t('configurator.routeSummaryName')}
           component={Configurator}
         />
         <Route path="/" component={Configurator} />
@@ -22,8 +22,4 @@ const Rtr = (props, context) => {
   );
 };
 
-Rtr.contextTypes = {
-  t: PropTypes.func.isRequired
-};
-
-export default Rtr;
+export default withTranslation()(Rtr);
