@@ -123,10 +123,7 @@ class Configurator extends Component {
                   path={'/' + t('routeCategoryName') + '/:category'}
                   component={MenuItems}
                 />
-                <Route
-                  path={'/' + t('routeCategoryName')}
-                  component={Summary}
-                />
+                <Route path={'/' + t('routeSummaryName')} component={Summary} />
                 <Redirect
                   to={
                     '/' +
