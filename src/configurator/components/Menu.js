@@ -36,7 +36,7 @@ class Menu extends Component {
         className={`d-block px-5 py-3 ${styles.link}`}
         activeClassName={styles.active}
       >
-        Gotowe
+        {t('ready')}
       </NavLink>
     );
 

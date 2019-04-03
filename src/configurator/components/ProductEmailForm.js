@@ -2,44 +2,34 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import i18n from 'i18next';
 import { withTranslation } from 'react-i18next';
+import translations from '../../translations';
 
 import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
-const translation = {
-  pl: {
-    email: 'Wpisz poprawny E-mail',
-    title: 'Wpisz tyłuł',
-    message: 'Wpisz wiadomość',
-    regulation: 'Zaakceptuj zgodę'
-  },
-  en: {
-    email: 'enter_correct_email',
-    title: 'enter_title',
-    message: 'enter_message',
-    regulation: 'accept_consent'
-  }
-};
-
 const validate = values => {
+  const currentLanguage = i18n.language;
   const errors = {};
 
   const emailPatt = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
   if (!emailPatt.test(values.emailSender)) {
-    errors.emailSender = translation[i18n.language].email;
+    errors.emailSender = translations[currentLanguage].translation.error_email;
   }
 
   if (!emailPatt.test(values.emailRecipient)) {
-    errors.emailRecipient = translation[i18n.language].email;
+    errors.emailRecipient =
+      translations[currentLanguage].translation.error_email;
   }
 
   if (!values.title) {
-    errors.title = translation[i18n.language].title;
+    errors.title = translations[currentLanguage].translation.error_title;
   }
 
   if (!values.regulation) {
-    errors.regulation = translation[i18n.language].regulation;
+    errors.regulation =
+      translations[currentLanguage].translation.error_regulation;
   }
+  console.log(errors);
 
   return errors;
 };
@@ -67,6 +57,7 @@ const checkbox = ({ input, label, meta: { touched, error } }) => (
 );
 
 const productEmailForm = props => {
+  const t = props.t;
   const { handleSubmit, pristine, submitting } = props;
 
   return (
@@ -75,7 +66,7 @@ const productEmailForm = props => {
         <Field
           name="emailSender"
           id="emailSender"
-          label="Twój E-mail *"
+          label={t('your_email') + '*'}
           component={input}
           type="email"
         />
@@ -84,7 +75,7 @@ const productEmailForm = props => {
         <Field
           name="emailRecipient"
           id="emailRecipient"
-          label="E-mail odbiorcy *"
+          label={t('recipient_email') + '*'}
           component={input}
           type="email"
         />
@@ -93,7 +84,7 @@ const productEmailForm = props => {
         <Field
           name="title"
           id="title"
-          label="Tytuł *"
+          label={t('title') + '*'}
           component={input}
           type="text"
         />
@@ -102,7 +93,7 @@ const productEmailForm = props => {
         <Field
           name="message"
           id="message"
-          label="Wiadomość"
+          label={t('message')}
           component={input}
           type="textarea"
         />
@@ -110,17 +101,17 @@ const productEmailForm = props => {
       <FormGroup check>
         <Field
           name="regulation"
-          label="Zgadzam się na regulamin *"
+          label={t('agree_regulations') + '*'}
           component={checkbox}
         />
       </FormGroup>
-      <p className="mt-4">* pola wymagane</p>
+      <p className="mt-4">* {t('required_fields') + '*'}</p>
       <Button
         color="primary"
         className="mt-4"
         disabled={pristine || submitting}
       >
-        Wyślij{' '}
+        {props.t('submit')}{' '}
         {submitting && <Spinner size="sm" color="danger" className="ml-2" />}
       </Button>
     </Form>
