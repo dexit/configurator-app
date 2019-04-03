@@ -31,6 +31,39 @@ const translations = {
       title: 'Tytuł',
       message: 'Wiadomość'
     }
+  },
+  en: {
+    translation: {
+      loading: 'Loading',
+      configurator: 'Configurator',
+      routeCategoryName: 'Category',
+      routeSummaryName: 'Ready',
+      save_product: 'Save product',
+      saved_product: 'Product saved',
+      saved_products: 'Saved products',
+      add_product: 'Add product',
+      form_sent:
+        'The form has been sent. Email was not delivered: test API - http://httpbin.org/post. Response from the server in the console.',
+      form_error: 'An error occured. The form has not been sent.',
+      send_product_email: 'Send the product description in an E-mail message',
+      your_product: 'Your product',
+      save_product_as_img: 'Save the product as a picture',
+      save_product_as_pdf: 'Save the product description as PDF',
+      remove: 'Remove',
+      error_email: 'Enter the correct email',
+      error_title: 'Enter the title',
+      enter_message: 'Enter the message',
+      error_regulation: 'Accept consent',
+      regulation: 'Accept consent',
+      submit: 'Submit',
+      ready: 'Ready',
+      your_email: 'Your e-mail',
+      recipient_email: 'E-mail recipient',
+      agree_regulations: 'Accept consent',
+      required_fields: 'Required fields',
+      title: 'Title',
+      message: 'Message'
+    }
   }
 };
 
