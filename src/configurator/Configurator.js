@@ -12,6 +12,8 @@ import ItemImg from './components/ItemImg';
 import Summary from './components/Summary';
 import SavedProducts from './components/SavedProducts';
 
+import translations from '../translations';
+
 class Configurator extends Component {
   setDefaultCategory() {
     const matchCategorySlug = this.props.match.params.category;
@@ -83,9 +85,16 @@ class Configurator extends Component {
     }
   }
 
+  changeLanguage = lng => {
+    const { i18n } = this.props;
+
+    i18n.changeLanguage(lng);
+  };
+
   render() {
-    const t = this.props.t;
+    const { t } = this.props;
     const isLoading = this.props.configuratorStore.isLoading;
+
     const spinner = (
       <div
         className={`d-flex justify-content-center align-items-center ${
@@ -103,11 +112,37 @@ class Configurator extends Component {
       </div>
     );
 
+    const Lang = () => {
+      const { i18n } = this.props;
+      const lang = [];
+
+      for (const key in translations) {
+        const active = key === i18n.language ? styles.active : undefined;
+
+        if (translations.hasOwnProperty(key)) {
+          lang.push(
+            <button
+              key={lang}
+              onClick={() => this.changeLanguage(key)}
+              className={`${styles.lang__btn} ${active}`}
+            >
+              {key.toUpperCase()}
+            </button>
+          );
+        }
+      }
+
+      return <div className={styles.lang}>{lang}</div>;
+    };
+
     return (
       <>
         <div className={`d-flex flex-column ${styles.wrapper}`}>
-          <header className="text-center text-uppercase my-5">
+          <header
+            className={`${styles.header} text-center text-uppercase my-5`}
+          >
             <h1>{t('configurator')}</h1>
+            <Lang />
           </header>
           <div className={`row flex-grow-1 ${styles.contentWrapper}`}>
             <div className="col-md-2">

@@ -1,5 +1,9 @@
-.wrapper {
+.wrapper {  
   min-height: 100vh;
+}
+
+.header {
+  position: relative;
 }
 
 .contentWrapper {
@@ -19,4 +23,18 @@
 .loadingSpinnerBorder {
   width: 3rem;
   height: 3rem;
+}
+
+.lang {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lang__btn {
+  &.active {
+    color: #fff;
+    background-color: red; 
+  }
 }

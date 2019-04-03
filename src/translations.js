@@ -36,8 +36,8 @@ const translations = {
     translation: {
       loading: 'Loading',
       configurator: 'Configurator',
-      routeCategoryName: 'Category',
-      routeSummaryName: 'Ready',
+      routeCategoryName: 'category',
+      routeSummaryName: 'ready',
       save_product: 'Save product',
       saved_product: 'Product saved',
       saved_products: 'Saved products',
