@@ -63,7 +63,7 @@ class Configurator extends Component {
   }
 
   componentDidMount() {
-    this.props.getCategories().then(() => {
+    this.props.getCategories(this.props.API_CATEGORIES).then(() => {
       this.setDefaultItems();
       this.setDefaultCategory();
     });

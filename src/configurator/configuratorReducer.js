@@ -10,6 +10,8 @@ const initialState = {
   savedProductsModal: false,
   productExists: false,
   productEmailModal: false,
+  API_CATEGORIES: '',
+  API_PRODUCT_EMAIL: '',
   userSettings: {
     activeCategorySlug: '',
     activeItems: null,

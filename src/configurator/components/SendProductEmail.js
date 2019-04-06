@@ -7,8 +7,6 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import ProductEmailForm from './ProductEmailForm';
 
-import { API_PRODUCT_EMAIL } from '../../app/App';
-
 import createProductPdf from '../../utils/createProductPdf';
 
 class SendProductEmail extends Component {
@@ -36,7 +34,7 @@ class SendProductEmail extends Component {
         data.append('product_pdf', pdf);
       })
       .then(() => {
-        return fetch(API_PRODUCT_EMAIL, {
+        return fetch(this.props.API_PRODUCT_EMAIL, {
           method: 'POST',
           body: data
         })

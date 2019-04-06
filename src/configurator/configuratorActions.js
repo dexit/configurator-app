@@ -1,7 +1,5 @@
 import * as constants from '../store/constants';
 
-import { API_CATEGORIES } from '../app/App';
-
 export const setDefaultActiveItems = () => {
   return {
     type: constants.CONFIGURATOR_SET_DEFAULT_ACTIVE_ITEMS
@@ -68,7 +66,7 @@ export const checkSavedProducts = () => {
   };
 };
 
-export function getCategories() {
+export function getCategories(API_CATEGORIES) {
   return dispatch => {
     dispatch(getCategoriesStart());
 
