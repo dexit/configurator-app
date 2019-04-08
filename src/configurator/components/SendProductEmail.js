@@ -9,6 +9,8 @@ import ProductEmailForm from './ProductEmailForm';
 
 import createProductPdf from '../../utils/createProductPdf';
 
+import { API_PRODUCT_EMAIL } from '../Configurator';
+
 class SendProductEmail extends Component {
   state = {
     successMessage: '',
@@ -34,7 +36,7 @@ class SendProductEmail extends Component {
         data.append('product_pdf', pdf);
       })
       .then(() => {
-        return fetch(this.props.API_PRODUCT_EMAIL, {
+        return fetch(API_PRODUCT_EMAIL, {
           method: 'POST',
           body: data
         })

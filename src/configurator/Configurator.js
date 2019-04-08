@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as configuratorActions from './configuratorActions';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 import styles from './Configurator.module.scss';
 
@@ -14,7 +15,15 @@ import SavedProducts from './components/SavedProducts';
 
 import translations from '../translations';
 
+import { API } from '../app/App';
+
+export const API_PRODUCT_EMAIL = 'http://httpbin.org/post';
+
 class Configurator extends Component {
+  getApiCategories() {
+    return API + `categories-${i18n.language}.json`;
+  }
+
   setDefaultCategory() {
     const matchCategorySlug = this.props.match.params.category;
     const activeCategorySlug = this.props.configuratorStore.userSettings
@@ -63,10 +72,27 @@ class Configurator extends Component {
   }
 
   componentDidMount() {
-    this.props.getCategories(this.props.API_CATEGORIES).then(() => {
+    const { language } = this.props.i18n;
+
+    this.language = language;
+
+    this.props.getCategories(this.getApiCategories()).then(() => {
       this.setDefaultItems();
       this.setDefaultCategory();
     });
+  }
+
+  componentDidUpdate() {
+    const { language } = this.props.i18n;
+
+    if (language !== this.language) {
+      this.props.getCategories(this.getApiCategories()).then(() => {
+        this.setDefaultItems();
+        this.setDefaultCategory();
+      });
+
+      this.language = language;
+    }
   }
 
   getDefaultCategory() {
@@ -189,7 +215,8 @@ const mapDispatchToProps = dispatch => {
     setDefaultActiveItems: () =>
       dispatch(configuratorActions.setDefaultActiveItems()),
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
-    getCategories: () => dispatch(configuratorActions.getCategories())
+    getCategories: API_CATEGORIES =>
+      dispatch(configuratorActions.getCategories(API_CATEGORIES))
   };
 };
 
