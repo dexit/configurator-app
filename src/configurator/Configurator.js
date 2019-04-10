@@ -26,8 +26,8 @@ class Configurator extends Component {
 
   setDefaultCategory() {
     const matchCategorySlug = this.props.match.params.category;
-    const activeCategorySlug = this.props.configuratorStore.userSettings
-      .activeCategorySlug;
+    const activeCategoryId = this.props.configuratorStore.userSettings
+      .activeCategoryId;
     const matchCategoryExist =
       this.props.configuratorStore.categories.findIndex(
         category => category.slug === matchCategorySlug
@@ -35,10 +35,12 @@ class Configurator extends Component {
         ? true
         : false;
 
-    let firstCategory = '';
+    let firstCategoryId = '';
+    let firstCategorySlug = '';
 
     if (this.props.configuratorStore.categories.length) {
-      firstCategory = this.props.configuratorStore.categories[0].id;
+      firstCategoryId = this.props.configuratorStore.categories[0].id;
+      firstCategorySlug = this.props.configuratorStore.categories[0].slug;
     }
 
     const setCategory = () => {
@@ -46,15 +48,15 @@ class Configurator extends Component {
         if (matchCategoryExist) {
           this.props.setActiveCategory(matchCategorySlug);
         } else {
-          this.props.setActiveCategory(firstCategory);
+          this.props.setActiveCategory(firstCategoryId);
           this.props.history.replace(
-            '/' + this.props.t('routeCategoryName') + '/' + firstCategory
+            '/' + this.props.t('routeCategoryName') + '/' + firstCategorySlug
           );
         }
-      } else if (!activeCategorySlug) {
-        this.props.setActiveCategory(firstCategory);
-      } else if (activeCategorySlug) {
-        this.props.setActiveCategory(activeCategorySlug);
+      } else if (!activeCategoryId) {
+        this.props.setActiveCategory(firstCategoryId);
+      } else if (activeCategoryId) {
+        this.props.setActiveCategory(activeCategoryId);
       }
     };
 
@@ -210,8 +212,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug)),
+    setActiveCategory: categoryId =>
+      dispatch(configuratorActions.setActiveCategory(categoryId)),
     setDefaultActiveItems: () =>
       dispatch(configuratorActions.setDefaultActiveItems()),
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),

@@ -11,7 +11,7 @@ const initialState = {
   productExists: false,
   productEmailModal: false,
   userSettings: {
-    activeCategorySlug: '',
+    activeCategoryId: null,
     activeItems: null,
     savedProducts: [],
     ...settingsLocalStorage
@@ -104,14 +104,14 @@ export default (state = initialState, action) => {
 
       return { ...state, userSettings: userSettingsActiveItems, categories };
     case constants.CONFIGURATOR_SET_ACTIVE_CATEGORY:
-      const firstCategorySlug =
-        state.categories.length > 0 && state.categories[0].slug;
-      const activeCategorySlug = action.payload.categorySlug
-        ? action.payload.categorySlug
-        : firstCategorySlug;
+      const firstCategoryId =
+        state.categories.length > 0 && state.categories[0].id;
+      const activeCategoryId = action.payload.categoryId
+        ? action.payload.categoryId
+        : firstCategoryId;
 
       const categoriesSetActive = state.categories.map(category => {
-        if (category.slug === activeCategorySlug) {
+        if (category.id === activeCategoryId) {
           return {
             ...category,
             active: true
@@ -126,7 +126,7 @@ export default (state = initialState, action) => {
 
       const userSettingsActiveCategory = {
         ...state.userSettings,
-        activeCategorySlug
+        activeCategoryId
       };
 
       localStorage.setItem(

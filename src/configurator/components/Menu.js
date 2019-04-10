@@ -8,8 +8,8 @@ import styles from './Menu.module.scss';
 import { NavLink, withRouter } from 'react-router-dom';
 
 class Menu extends Component {
-  handleCategoryClick = categorySlug => {
-    this.props.setActiveCategory(categorySlug);
+  handleCategoryClick = categoryId => {
+    this.props.setActiveCategory(categoryId);
   };
 
   render() {
@@ -23,7 +23,7 @@ class Menu extends Component {
           key={item.id}
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
-          onClick={this.handleCategoryClick.bind(this, item.slug)}
+          onClick={this.handleCategoryClick.bind(this, item.id)}
         >
           {item.name}
         </NavLink>
@@ -55,8 +55,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveCategory: categorySlug =>
-      dispatch(configuratorActions.setActiveCategory(categorySlug))
+    setActiveCategory: categoryId =>
+      dispatch(configuratorActions.setActiveCategory(categoryId))
   };
 };
 

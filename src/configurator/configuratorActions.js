@@ -15,11 +15,11 @@ export const setActiveItems = items => {
   };
 };
 
-export const setActiveCategory = categorySlug => {
+export const setActiveCategory = categoryId => {
   return {
     type: constants.CONFIGURATOR_SET_ACTIVE_CATEGORY,
     payload: {
-      categorySlug
+      categoryId
     }
   };
 };
