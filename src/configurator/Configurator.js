@@ -38,7 +38,7 @@ class Configurator extends Component {
     let firstCategory = '';
 
     if (this.props.configuratorStore.categories.length) {
-      firstCategory = this.props.configuratorStore.categories[0].slug;
+      firstCategory = this.props.configuratorStore.categories[0].id;
     }
 
     const setCategory = () => {

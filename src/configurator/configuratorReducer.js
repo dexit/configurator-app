@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
         [...state.categories]
           .map(item => {
             return {
-              [item.slug]: item.items[0].id
+              [item.id]: item.items[0].id
             };
           })
           .reduce((obj1, obj2) => {
@@ -68,7 +68,7 @@ export default (state = initialState, action) => {
 
       function setActiveItems() {
         categories = state.categories.map(category => {
-          const activeItem = userSettingsActiveItems.activeItems[category.slug];
+          const activeItem = userSettingsActiveItems.activeItems[category.id];
           let items = [];
           let activeItemExist = false;
 
@@ -211,9 +211,9 @@ export default (state = initialState, action) => {
         ...state.userSettings.savedProducts
       ].filter(product => {
         return Object.keys(product.productParts).every(function(key) {
-          const categoryIndex = state.categories.findIndex(
-            category => category.slug === key
-          );
+          const categoryIndex = state.categories.findIndex(category => {
+            return category.id === Number(key);
+          });
 
           if (categoryIndex > -1) {
             const itemIndex = state.categories[categoryIndex].items.findIndex(

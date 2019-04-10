@@ -5,8 +5,8 @@ import * as configuratorActions from '../configuratorActions';
 import styles from './ItemsList.module.scss';
 
 class ItemsList extends Component {
-  handleClick = (activeCategorySlug, itemId) => {
-    this.props.setActiveItems({ [activeCategorySlug]: itemId });
+  handleClick = (activeCategoryId, itemId) => {
+    this.props.setActiveItems({ [activeCategoryId]: itemId });
   };
 
   list() {
@@ -27,11 +27,7 @@ class ItemsList extends Component {
           >
             <button
               className={`${styles.item} ${activeItemClass()}`}
-              onClick={this.handleClick.bind(
-                this,
-                activeCategory.slug,
-                item.id
-              )}
+              onClick={this.handleClick.bind(this, activeCategory.id, item.id)}
             >
               <img
                 src="/img/simple-model.png"
