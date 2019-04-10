@@ -28,12 +28,15 @@ class Configurator extends Component {
     const matchCategorySlug = this.props.match.params.category;
     const activeCategoryId = this.props.configuratorStore.userSettings
       .activeCategoryId;
-    const matchCategoryExist =
-      this.props.configuratorStore.categories.findIndex(
-        category => category.slug === matchCategorySlug
-      ) > -1
-        ? true
-        : false;
+    const categories = this.props.configuratorStore.categories;
+    const matchCategoryIndex = categories.findIndex(
+      category => category.slug === matchCategorySlug
+    );
+    let matchCategoryId = null;
+
+    if (matchCategoryIndex > -1) {
+      matchCategoryId = categories[matchCategoryIndex].id;
+    }
 
     let firstCategoryId = '';
     let firstCategorySlug = '';
@@ -45,8 +48,8 @@ class Configurator extends Component {
 
     const setCategory = () => {
       if (matchCategorySlug) {
-        if (matchCategoryExist) {
-          this.props.setActiveCategory(matchCategorySlug);
+        if (matchCategoryIndex > -1) {
+          this.props.setActiveCategory(matchCategoryId);
         } else {
           this.props.setActiveCategory(firstCategoryId);
           this.props.history.replace(
@@ -98,17 +101,27 @@ class Configurator extends Component {
   }
 
   getDefaultCategory() {
-    const activeCategorySlug = this.props.configuratorStore.userSettings
-      .activeCategorySlug;
-    let firstCategory = '';
+    const activeCategoryId = this.props.configuratorStore.userSettings
+      .activeCategoryId;
+    const categories = this.props.configuratorStore.categories;
+    const matchCategoryIndex = categories.findIndex(
+      category => category.id === activeCategoryId
+    );
+    let activeCategorySlug = false;
 
-    if (this.props.configuratorStore.categories.length) {
-      firstCategory = this.props.configuratorStore.categories[0].slug;
+    if (matchCategoryIndex > -1) {
+      activeCategorySlug = categories[matchCategoryIndex].slug;
     }
 
-    if (activeCategorySlug) {
+    let firstCategory = '';
+
+    if (activeCategorySlug !== false) {
       return activeCategorySlug;
     } else {
+      if (this.props.configuratorStore.categories.length) {
+        firstCategory = this.props.configuratorStore.categories[0].slug;
+      }
+
       return firstCategory;
     }
   }
@@ -183,14 +196,16 @@ class Configurator extends Component {
                   component={MenuItems}
                 />
                 <Route path={'/' + t('routeSummaryName')} component={Summary} />
-                <Redirect
-                  to={
-                    '/' +
-                    t('routeCategoryName') +
-                    '/' +
-                    this.getDefaultCategory()
-                  }
-                />
+                {this.getDefaultCategory() ? (
+                  <Redirect
+                    to={
+                      '/' +
+                      t('routeCategoryName') +
+                      '/' +
+                      this.getDefaultCategory()
+                    }
+                  />
+                ) : null}
               </Switch>
             </div>
             <div className="col-md-7">
