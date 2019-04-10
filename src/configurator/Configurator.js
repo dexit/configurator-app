@@ -20,6 +20,8 @@ import { API } from '../app/App';
 export const API_PRODUCT_EMAIL = 'http://httpbin.org/post';
 
 class Configurator extends Component {
+  defaultCategory = '';
+
   getApiCategories() {
     return API + `categories-${i18n.language}.json`;
   }
@@ -76,30 +78,6 @@ class Configurator extends Component {
     this.props.setActiveItems();
   }
 
-  componentDidMount() {
-    const { language } = this.props.i18n;
-
-    this.language = language;
-
-    this.props.getCategories(this.getApiCategories()).then(() => {
-      this.setDefaultItems();
-      this.setDefaultCategory();
-    });
-  }
-
-  componentDidUpdate() {
-    const { language } = this.props.i18n;
-
-    if (language !== this.language) {
-      this.props.getCategories(this.getApiCategories()).then(() => {
-        this.setDefaultItems();
-        this.setDefaultCategory();
-      });
-
-      this.language = language;
-    }
-  }
-
   getDefaultCategory() {
     const activeCategoryId = this.props.configuratorStore.userSettings
       .activeCategoryId;
@@ -132,7 +110,35 @@ class Configurator extends Component {
     i18n.changeLanguage(lng);
   };
 
+  componentDidMount() {
+    const { language } = this.props.i18n;
+
+    this.language = language;
+
+    this.props.getCategories(this.getApiCategories()).then(() => {
+      this.setDefaultItems();
+      this.setDefaultCategory();
+      this.defaultCategory = this.getDefaultCategory();
+    });
+  }
+
+  componentDidUpdate() {
+    const { language } = this.props.i18n;
+
+    if (language !== this.language) {
+      this.props.getCategories(this.getApiCategories()).then(() => {
+        this.setDefaultItems();
+        this.setDefaultCategory();
+        this.defaultCategory = this.getDefaultCategory();
+      });
+
+      this.language = language;
+    }
+  }
+
   render() {
+    console.log(this.defaultCategory);
+
     const { t } = this.props;
     const isLoading = this.props.configuratorStore.isLoading;
 
@@ -196,13 +202,10 @@ class Configurator extends Component {
                   component={MenuItems}
                 />
                 <Route path={'/' + t('routeSummaryName')} component={Summary} />
-                {this.getDefaultCategory() ? (
+                {this.defaultCategory ? (
                   <Redirect
                     to={
-                      '/' +
-                      t('routeCategoryName') +
-                      '/' +
-                      this.getDefaultCategory()
+                      '/' + t('routeCategoryName') + '/' + this.defaultCategory
                     }
                   />
                 ) : null}
