@@ -20,32 +20,37 @@ import { API } from '../app/App';
 export const API_PRODUCT_EMAIL = 'http://httpbin.org/post';
 
 class Configurator extends Component {
-  defaultCategory = '';
-
   getApiCategories() {
     return API + `categories-${i18n.language}.json`;
   }
 
   setDefaultCategory() {
     const matchCategorySlug = this.props.match.params.category;
-    const activeCategoryId = this.props.configuratorStore.userSettings
-      .activeCategoryId;
-    const categories = this.props.configuratorStore.categories;
-    const matchCategoryIndex = categories.findIndex(
+    const activeCategoryId = this.props.userSettings.activeCategoryId;
+    let activeCategorySlug;
+    let activeCategoryIndex;
+    const matchCategoryIndex = this.props.categories.findIndex(
       category => category.slug === matchCategorySlug
     );
     let matchCategoryId = null;
 
     if (matchCategoryIndex > -1) {
-      matchCategoryId = categories[matchCategoryIndex].id;
+      matchCategoryId = this.props.categories[matchCategoryIndex].id;
+    }
+
+    if (activeCategoryId) {
+      activeCategoryIndex = this.props.categories.findIndex(
+        category => category.id === activeCategoryId
+      );
+      activeCategorySlug = this.props.categories[activeCategoryIndex].slug;
     }
 
     let firstCategoryId = '';
     let firstCategorySlug = '';
 
-    if (this.props.configuratorStore.categories.length) {
-      firstCategoryId = this.props.configuratorStore.categories[0].id;
-      firstCategorySlug = this.props.configuratorStore.categories[0].slug;
+    if (this.props.categories.length) {
+      firstCategoryId = this.props.categories[0].id;
+      firstCategorySlug = this.props.categories[0].slug;
     }
 
     const setCategory = () => {
@@ -60,8 +65,14 @@ class Configurator extends Component {
         }
       } else if (!activeCategoryId) {
         this.props.setActiveCategory(firstCategoryId);
+        this.props.history.replace(
+          '/' + this.props.t('routeCategoryName') + '/' + firstCategorySlug
+        );
       } else if (activeCategoryId) {
         this.props.setActiveCategory(activeCategoryId);
+        this.props.history.replace(
+          '/' + this.props.t('routeCategoryName') + '/' + activeCategorySlug
+        );
       }
     };
 
@@ -78,32 +89,6 @@ class Configurator extends Component {
     this.props.setActiveItems();
   }
 
-  getDefaultCategory() {
-    const activeCategoryId = this.props.configuratorStore.userSettings
-      .activeCategoryId;
-    const categories = this.props.configuratorStore.categories;
-    const matchCategoryIndex = categories.findIndex(
-      category => category.id === activeCategoryId
-    );
-    let activeCategorySlug = false;
-
-    if (matchCategoryIndex > -1) {
-      activeCategorySlug = categories[matchCategoryIndex].slug;
-    }
-
-    let firstCategory = '';
-
-    if (activeCategorySlug !== false) {
-      return activeCategorySlug;
-    } else {
-      if (this.props.configuratorStore.categories.length) {
-        firstCategory = this.props.configuratorStore.categories[0].slug;
-      }
-
-      return firstCategory;
-    }
-  }
-
   changeLanguage = lng => {
     const { i18n } = this.props;
 
@@ -118,7 +103,7 @@ class Configurator extends Component {
     this.props.getCategories(this.getApiCategories()).then(() => {
       this.setDefaultItems();
       this.setDefaultCategory();
-      this.defaultCategory = this.getDefaultCategory();
+      this.props.getDefaultCategory();
     });
   }
 
@@ -129,7 +114,7 @@ class Configurator extends Component {
       this.props.getCategories(this.getApiCategories()).then(() => {
         this.setDefaultItems();
         this.setDefaultCategory();
-        this.defaultCategory = this.getDefaultCategory();
+        this.props.getDefaultCategory();
       });
 
       this.language = language;
@@ -137,10 +122,10 @@ class Configurator extends Component {
   }
 
   render() {
-    console.log(this.defaultCategory);
-
     const { t } = this.props;
     const isLoading = this.props.configuratorStore.isLoading;
+
+    const defaultCategory = this.props.configuratorStore.defaultCategory;
 
     const spinner = (
       <div
@@ -202,11 +187,9 @@ class Configurator extends Component {
                   component={MenuItems}
                 />
                 <Route path={'/' + t('routeSummaryName')} component={Summary} />
-                {this.defaultCategory ? (
+                {defaultCategory ? (
                   <Redirect
-                    to={
-                      '/' + t('routeCategoryName') + '/' + this.defaultCategory
-                    }
+                    to={'/' + t('routeCategoryName') + '/' + defaultCategory}
                   />
                 ) : null}
               </Switch>
@@ -225,7 +208,11 @@ class Configurator extends Component {
 }
 
 const mapStateToProps = state => {
-  return { ...state };
+  return {
+    ...state,
+    categories: state.configuratorStore.categories,
+    userSettings: state.configuratorStore.userSettings
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -236,7 +223,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(configuratorActions.setDefaultActiveItems()),
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
     getCategories: API_CATEGORIES =>
-      dispatch(configuratorActions.getCategories(API_CATEGORIES))
+      dispatch(configuratorActions.getCategories(API_CATEGORIES)),
+    getDefaultCategory: () => dispatch(configuratorActions.getDefaultCategory())
   };
 };
 

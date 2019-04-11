@@ -112,3 +112,9 @@ export function productEmailModalOpen() {
     type: constants.PRODUCT_EMAIL_MODAL_OPEN
   };
 }
+
+export function getDefaultCategory() {
+  return {
+    type: constants.GET_DEFAULT_CATEGORY
+  };
+}

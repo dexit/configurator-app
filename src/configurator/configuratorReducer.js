@@ -10,6 +10,7 @@ const initialState = {
   savedProductsModal: false,
   productExists: false,
   productEmailModal: false,
+  defaultCategory: '',
   userSettings: {
     activeCategoryId: null,
     activeItems: null,
@@ -258,6 +259,30 @@ export default (state = initialState, action) => {
       return {
         ...state,
         productEmailModal: true
+      };
+    case constants.GET_DEFAULT_CATEGORY:
+      const matchCategoryIndex = state.categories.findIndex(
+        category => category.id === state.userSettings.activeCategoryId
+      );
+      let activeCategorySlug = null;
+
+      if (matchCategoryIndex > -1) {
+        activeCategorySlug = state.categories[matchCategoryIndex].slug;
+      }
+
+      let defaultCategory = '';
+
+      if (activeCategorySlug !== null) {
+        defaultCategory = activeCategorySlug;
+      } else {
+        if (state.categories.length) {
+          defaultCategory = state.categories[0].slug;
+        }
+      }
+
+      return {
+        ...state,
+        defaultCategory
       };
     default:
       return state;
