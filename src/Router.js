@@ -28,15 +28,11 @@ class Rtr extends Component {
             component={Configurator}
           />
           <Route
-            path={
-              '/' +
-              this.props.t('configurator.routeCategoryName') +
-              '/:category'
-            }
+            path={'/' + this.props.t('routeCategoryName') + '/:category'}
             component={Configurator}
           />
           <Route
-            path={'/' + this.props.t('configurator.routeSummaryName')}
+            path={'/' + this.props.t('routeSummaryName')}
             component={Configurator}
           />
           <Route path="/" component={Configurator} />

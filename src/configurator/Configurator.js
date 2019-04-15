@@ -25,6 +25,8 @@ class Configurator extends Component {
   }
 
   setDefaultCategory() {
+    const summaryActive =
+      this.props.match.path === '/' + this.props.t('routeSummaryName');
     const matchCategorySlug = this.props.match.params.category;
     const activeCategoryId = this.props.userSettings.activeCategoryId;
     let activeCategorySlug;
@@ -54,7 +56,11 @@ class Configurator extends Component {
     }
 
     const setCategory = () => {
-      if (matchCategorySlug) {
+      if (summaryActive) {
+        this.props.history.replace(
+          this.props.routeLng + '/' + this.props.t('routeSummaryName')
+        );
+      } else if (matchCategorySlug) {
         if (matchCategoryIndex > -1) {
           this.props.setActiveCategory(matchCategoryId);
         } else {
