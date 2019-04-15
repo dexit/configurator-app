@@ -11,6 +11,8 @@ const initialState = {
   productExists: false,
   productEmailModal: false,
   defaultCategory: '',
+  routeLng: '',
+  defaultLng: 'pl',
   userSettings: {
     activeCategoryId: null,
     activeItems: null,
@@ -250,17 +252,17 @@ export default (state = initialState, action) => {
       };
     case constants.CONFIGURATOR_GET_CATEGORIES_ERROR:
       return { ...state, isLoading: false, isError: true };
-    case constants.PRODUCT_EMAIL_MODAL_TOGGLE:
+    case constants.CONFIGURATOR_PRODUCT_EMAIL_MODAL_TOGGLE:
       return {
         ...state,
         productEmailModal: !state.productEmailModal
       };
-    case constants.PRODUCT_EMAIL_MODAL_OPEN:
+    case constants.CONFIGURATOR_PRODUCT_EMAIL_MODAL_OPEN:
       return {
         ...state,
         productEmailModal: true
       };
-    case constants.GET_DEFAULT_CATEGORY:
+    case constants.CONFIGURATOR_GET_DEFAULT_CATEGORY:
       const matchCategoryIndex = state.categories.findIndex(
         category => category.id === state.userSettings.activeCategoryId
       );
@@ -283,6 +285,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         defaultCategory
+      };
+    case constants.CONFIGURATOR_SAVE_ROUTE_LNG:
+      const routeLng =
+        action.payload.lng === state.defaultLng ? '' : '/' + action.payload.lng;
+
+      return {
+        ...state,
+        routeLng
       };
     default:
       return state;

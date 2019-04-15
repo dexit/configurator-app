@@ -103,18 +103,27 @@ export function getCategoriesError(error) {
 
 export function productEmailModalToggle() {
   return {
-    type: constants.PRODUCT_EMAIL_MODAL_TOGGLE
+    type: constants.CONFIGURATOR_PRODUCT_EMAIL_MODAL_TOGGLE
   };
 }
 
 export function productEmailModalOpen() {
   return {
-    type: constants.PRODUCT_EMAIL_MODAL_OPEN
+    type: constants.CONFIGURATOR_PRODUCT_EMAIL_MODAL_OPEN
   };
 }
 
 export function getDefaultCategory() {
   return {
-    type: constants.GET_DEFAULT_CATEGORY
+    type: constants.CONFIGURATOR_GET_DEFAULT_CATEGORY
+  };
+}
+
+export function saveRouteLng(lng) {
+  return {
+    type: constants.CONFIGURATOR_SAVE_ROUTE_LNG,
+    payload: {
+      lng
+    }
   };
 }

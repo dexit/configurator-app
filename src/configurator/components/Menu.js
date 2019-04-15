@@ -19,7 +19,9 @@ class Menu extends Component {
     const menu = categories.map(item => {
       return (
         <NavLink
-          to={'/' + t('routeCategoryName') + '/' + item.slug}
+          to={
+            this.props.routeLng + '/' + t('routeCategoryName') + '/' + item.slug
+          }
           key={item.id}
           className={`d-block px-5 py-3 ${styles.link}`}
           activeClassName={styles.active}
@@ -32,7 +34,7 @@ class Menu extends Component {
 
     const summary = (
       <NavLink
-        to={'/' + t('routeSummaryName')}
+        to={this.props.routeLng + '/' + t('routeSummaryName')}
         className={`d-block px-5 py-3 ${styles.link}`}
         activeClassName={styles.active}
       >
@@ -50,7 +52,10 @@ class Menu extends Component {
 }
 
 const mapStateToProps = state => {
-  return { ...state };
+  return {
+    ...state,
+    routeLng: state.configuratorStore.routeLng
+  };
 };
 
 const mapDispatchToProps = dispatch => {

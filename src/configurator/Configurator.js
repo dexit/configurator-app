@@ -60,18 +60,30 @@ class Configurator extends Component {
         } else {
           this.props.setActiveCategory(firstCategoryId);
           this.props.history.replace(
-            '/' + this.props.t('routeCategoryName') + '/' + firstCategorySlug
+            this.props.routeLng +
+              '/' +
+              this.props.t('routeCategoryName') +
+              '/' +
+              firstCategorySlug
           );
         }
       } else if (!activeCategoryId) {
         this.props.setActiveCategory(firstCategoryId);
         this.props.history.replace(
-          '/' + this.props.t('routeCategoryName') + '/' + firstCategorySlug
+          this.props.routeLng +
+            '/' +
+            this.props.t('routeCategoryName') +
+            '/' +
+            firstCategorySlug
         );
       } else if (activeCategoryId) {
         this.props.setActiveCategory(activeCategoryId);
         this.props.history.replace(
-          '/' + this.props.t('routeCategoryName') + '/' + activeCategorySlug
+          this.props.routeLng +
+            '/' +
+            this.props.t('routeCategoryName') +
+            '/' +
+            activeCategorySlug
         );
       }
     };
@@ -93,9 +105,25 @@ class Configurator extends Component {
     const { i18n } = this.props;
 
     i18n.changeLanguage(lng);
+    this.props.saveRouteLng(lng);
   };
 
+  setRouteLang() {
+    const routeLng = this.props.match.params.lng;
+    const { i18n } = this.props;
+    const { language } = i18n;
+
+    if (routeLng && routeLng !== language) {
+      i18n.changeLanguage(routeLng);
+      this.props.saveRouteLng(routeLng);
+    } else {
+      this.props.saveRouteLng(language);
+    }
+  }
+
   componentDidMount() {
+    this.setRouteLang();
+
     const { language } = this.props.i18n;
 
     this.language = language;
@@ -183,13 +211,27 @@ class Configurator extends Component {
             <div className="col-md-3">
               <Switch>
                 <Route
-                  path={'/' + t('routeCategoryName') + '/:category'}
+                  path={
+                    this.props.routeLng +
+                    '/' +
+                    t('routeCategoryName') +
+                    '/:category'
+                  }
                   component={MenuItems}
                 />
-                <Route path={'/' + t('routeSummaryName')} component={Summary} />
+                <Route
+                  path={this.props.routeLng + '/' + t('routeSummaryName')}
+                  component={Summary}
+                />
                 {defaultCategory ? (
                   <Redirect
-                    to={'/' + t('routeCategoryName') + '/' + defaultCategory}
+                    to={
+                      this.props.routeLng +
+                      '/' +
+                      t('routeCategoryName') +
+                      '/' +
+                      defaultCategory
+                    }
                   />
                 ) : null}
               </Switch>
@@ -211,7 +253,8 @@ const mapStateToProps = state => {
   return {
     ...state,
     categories: state.configuratorStore.categories,
-    userSettings: state.configuratorStore.userSettings
+    userSettings: state.configuratorStore.userSettings,
+    routeLng: state.configuratorStore.routeLng
   };
 };
 
@@ -224,7 +267,9 @@ const mapDispatchToProps = dispatch => {
     setActiveItems: () => dispatch(configuratorActions.setActiveItems()),
     getCategories: API_CATEGORIES =>
       dispatch(configuratorActions.getCategories(API_CATEGORIES)),
-    getDefaultCategory: () => dispatch(configuratorActions.getDefaultCategory())
+    getDefaultCategory: () =>
+      dispatch(configuratorActions.getDefaultCategory()),
+    saveRouteLng: lng => dispatch(configuratorActions.saveRouteLng(lng))
   };
 };
 
