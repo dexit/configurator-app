@@ -1,13 +1,13 @@
 {
   "main.css": "/configurator-app/static/css/main.0605b076.chunk.css",
-  "main.js": "/configurator-app/static/js/main.85d504c4.chunk.js",
-  "main.js.map": "/configurator-app/static/js/main.85d504c4.chunk.js.map",
+  "main.js": "/configurator-app/static/js/main.03e44b8c.chunk.js",
+  "main.js.map": "/configurator-app/static/js/main.03e44b8c.chunk.js.map",
   "runtime~main.js": "/configurator-app/static/js/runtime~main.b73bb04c.js",
   "runtime~main.js.map": "/configurator-app/static/js/runtime~main.b73bb04c.js.map",
   "static/js/2.9fd0585b.chunk.js": "/configurator-app/static/js/2.9fd0585b.chunk.js",
   "static/js/2.9fd0585b.chunk.js.map": "/configurator-app/static/js/2.9fd0585b.chunk.js.map",
   "index.html": "/configurator-app/index.html",
-  "precache-manifest.cefb8ea6574d88709b8d5f50e7372de4.js": "/configurator-app/precache-manifest.cefb8ea6574d88709b8d5f50e7372de4.js",
+  "precache-manifest.ed6fff9a2c0c8b5dd1585808ee0ddda4.js": "/configurator-app/precache-manifest.ed6fff9a2c0c8b5dd1585808ee0ddda4.js",
   "service-worker.js": "/configurator-app/service-worker.js",
   "static/css/main.0605b076.chunk.css.map": "/configurator-app/static/css/main.0605b076.chunk.css.map"
 }
