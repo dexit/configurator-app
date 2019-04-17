@@ -29,7 +29,6 @@ const validate = values => {
     errors.regulation =
       translations[currentLanguage].translation.error_regulation;
   }
-  console.log(errors);
 
   return errors;
 };
