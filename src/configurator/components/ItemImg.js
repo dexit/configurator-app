@@ -8,8 +8,6 @@ import styles from './ItemImg.module.scss';
 import createProductThumb from '../../utils/createProductThumb';
 
 class ItemImg extends Component {
-  componentUpdated = false;
-
   handleAddClick = () => {
     if (!this.props.configuratorStore.productExists) {
       this.props.openSavedProducts();
@@ -23,13 +21,12 @@ class ItemImg extends Component {
     this.props.checkProductExist();
   }
 
-  componentDidUpdate() {
-    if (!this.componentUpdated) {
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.configuratorStore.userSettings.activeItems !==
+      this.props.configuratorStore.userSettings.activeItems
+    ) {
       this.props.checkProductExist();
-
-      this.componentUpdated = true;
-    } else {
-      this.componentUpdated = false;
     }
   }
 
@@ -42,7 +39,7 @@ class ItemImg extends Component {
         if (item.active) {
           return (
             <img
-              src={item.imgLarge}
+              src={process.env.PUBLIC_URL + item.imgLarge}
               alt=""
               key={item.id}
               className={styles.img}
@@ -75,10 +72,16 @@ class ItemImg extends Component {
     return (
       <div
         className={styles.bg}
-        style={{ backgroundImage: 'url(/img/product-bg.jpg)' }}
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL}/img/product-bg.jpg)`
+        }}
         id="product"
       >
-        <img src="/img/transparent-bg.png" alt="" className="img-fluid" />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/transparent-bg.png`}
+          alt=""
+          className="img-fluid"
+        />
         {images}
         {categories.length && !this.props.onlyImg ? btnAddProduct : null}
       </div>
