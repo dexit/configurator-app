@@ -17,7 +17,7 @@ import translations from '../translations';
 
 import { API } from '../app/App';
 
-export const API_PRODUCT_EMAIL = 'http://httpbin.org/post';
+export const API_PRODUCT_EMAIL = 'https://httpbin.org/post';
 
 class Configurator extends Component {
   getApiCategories() {

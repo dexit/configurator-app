@@ -5,7 +5,7 @@ import store from '../store/store';
 
 import Router from '../Router';
 
-export const API = '/';
+export const API = process.env.PUBLIC_URL + '/';
 
 const Loader = () => <div>loading...</div>;
 

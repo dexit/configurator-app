@@ -30,11 +30,15 @@ class ItemsList extends Component {
               onClick={this.handleClick.bind(this, activeCategory.id, item.id)}
             >
               <img
-                src="/img/simple-model.png"
+                src={`${process.env.PUBLIC_URL}/img/simple-model.png`}
                 alt=""
                 className={styles.simpleModel}
               />
-              <img src={item.imgThumb} alt="" className={styles.thumb} />
+              <img
+                src={process.env.PUBLIC_URL + item.imgThumb}
+                alt=""
+                className={styles.thumb}
+              />
               {item.name}
             </button>
           </div>
