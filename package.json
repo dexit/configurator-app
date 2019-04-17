@@ -1,9 +1,11 @@
 {
   "name": "configurator-app",
   "version": "0.1.0",
+  "homepage": "https://lukkupis.github.io/configurator-app/",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "gh-pages": "^2.0.1",
     "html2canvas": "^1.0.0-alpha.12",
     "html2pdf.js": "^0.9.1",
     "i18next": "^15.0.8",
@@ -22,6 +24,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
