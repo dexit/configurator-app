@@ -15,3 +15,6 @@
 - Create React App
 - Bootstrap 4
 - Sass
+
+## Demo:
+https://lukkupis.github.io/configurator-app/
