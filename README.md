@@ -1,6 +1,6 @@
-Products Configurator
+# Products Configurator
 
-Features:
+## Features:
 - configure product from many elements
 - save products in localstorage
 - save product as a picture
@@ -8,7 +8,7 @@ Features:
 - send product description in an e-mail
 - support for many languages
 
-Built with:
+## Built with:
 - React
 - React Router
 - React Redux
